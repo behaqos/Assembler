@@ -48,12 +48,14 @@ int             find_oper(char *str, int len)
 int             check_op(t_asm *bler)
 {
     int         i;
+    int         start;
 
+    start = 0;
     i = 0; // TODO пропускает первую операцию. Почему?
     if (check_label(bler))
         bler->line = ft_strchr(bler->line, ':') + 1;
-	while (*bler->line == ' ' || *bler->line == '\t')
-		bler->line++;
+	while (bler->line[i] == ' ' || bler->line[i] == '\t')
+		i++;
     while (bler->line[i] && ft_isalpha(bler->line[i]))
         i++;
     if (i > 0 && find_oper(bler->line, i) != -1)
@@ -88,7 +90,7 @@ void             parse_op(t_asm *bler, t_operation *oper)
  * Если операция нашлась, то парсим в parse_op имя операции и его код;
  * Далее парсим аргументы операциии.
  */
-
+// FIXME неправильно записывает имя операции.
 void             add_op(t_asm *bler, t_operation *oper)
 {
     if (check_op(bler))

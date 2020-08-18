@@ -44,13 +44,20 @@ typedef enum types
     COMMAND
 };
 
+/*
+ * str_val и num_val запоминают сами значения исходя из типа.
+ * Детектор указывает - это строка или цифра (STRING_VAL или NUM_VAL);
+ * args_size размер аргумента;
+ * type - сохраняет в виде цифр тип аргумент - T_REG, T_DIR, T_IND;
+ */
+
 typedef  struct     s_arg
 {
     char            *str_val;
     int             num_val;
     int             detector;
     char            *args_size;
-    char            *type;
+    int            type;
     struct s_arg    *next;
 }                   t_argument;
 
@@ -70,6 +77,10 @@ typedef  struct         s_operation
     t_argument          *args;
     struct s_operation  *next;
 }                       t_operation;
+
+/*
+ *
+ */
 
 typedef  struct     s_asm
 {

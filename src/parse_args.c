@@ -67,20 +67,20 @@ int                 check_t_dir(char *str)
 	int             i;
 
 	i = 0;
-	if ( str[i] && str[i] == '%')
+	if (str[i] && str[i] == '%')
 	{
 		i++;
 		if (str[i] == ':')
 			return (TRUE);
-	}
-	else if (str[i] != '\0')
-	{
-		if (str[i] == '-')
-			i++;
-		while (ft_isdigit(str[i]))
-			i++;
-		if (str[i] == '\0')
-			return (TRUE);
+		else if (str[i] != '\0')
+		{
+			if (str[i] == '-')
+				i++;
+			while (ft_isdigit(str[i]))
+				i++;
+			if (str[i] == '\0')
+				return (TRUE);
+		}
 	}
 	return (FALSE);
 }
@@ -158,16 +158,16 @@ void                *parse_data(char *arg, int type, int *detector)
 		{
 			i++;
 			*detector = STRING_VAL;
-			if (!(str = ft_strsub(arg + i, 0, ft_strlen(str) - 1)))
+			if (!(str = ft_strsub(arg + i, 0, ft_strlen(arg) - 1)))
 				return (NULL);
 			return ((void *) str);
 		}
-		else
+		else if (arg[i] == '%')
 		{
 			*detector = NUM_VAL;
 			if (!(value_num = (unsigned *)ft_memalloc(sizeof(unsigned))))
 				return (NULL);
-			value_num = (unsigned)ft_atoi(arg + i);
+			*value_num = (unsigned)ft_atoi(arg + i); // FIXME записывается NULL и обнуляет переменную. А должен записать ноль.
 			return ((void *)value_num);
 		}
 	}
@@ -194,6 +194,7 @@ void                join_arg_to_oper(t_operation *oper, t_argument *new_arg)
  * Дальше смотрим - если аргумент строка - то добавляем в переменную строки.
  * И указываем флаг STRING_VAL в аргументе.
  * Если строка, то указывается во флаге 2. Если цифры, то указ-ся 1.
+ * detector нужен чтобы понимать - это строка или цифры.
  */
 
 
@@ -205,6 +206,7 @@ void                join_argument(t_operation *oper, void *arg, int type, int de
 
 	if (!(new_arg = (t_argument *)ft_memalloc(sizeof(t_argument))))
 		error_printf(NULL, ERROR_ALLOCATE, NULL);
+	new_arg->type = type;
 	join_arg_to_oper(oper, new_arg);
 	if (detector == STRING_VAL)
 	{
@@ -214,8 +216,9 @@ void                join_argument(t_operation *oper, void *arg, int type, int de
 	else if (detector == NUM_VAL)
 	{
 		new_arg->num_val = ((int *)arg)[0]; // неправильно записывается.
-		free(arg);
+		free(arg); // FIXME почему не очищается arg?
 	}
+	// TODO set_arg_size()
 }
 /*
  * Находим тип. Если тип не найден, то вывод ошибки.
