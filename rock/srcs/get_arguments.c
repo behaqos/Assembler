@@ -56,12 +56,16 @@ static	void	check_arguments(t_command *command)
 	arg = command->args;
 	while (arg)
 	{
+		// Если количество аргументов больше трёх, ошибка.
 		(len > 3) ? ft_error(ERR_TOO_MUCH_ARGS) : 0;
+		// Если нет g_table[i - 1].args[j].arg[(int)k], который принимает код операции, длину и типа, то огибка
 		if (!ARG(command->opcode, len, arg->type))
 			ft_error(ERR_NOT_COMPATIBLE_ARG);
+		// инкрементируем кол-во аргументов.
 		len++;
 		arg = arg->next;
 	}
+	// Если кол-во аргументов больше, чем надо для это операции, то ошибка.
 	(COUNT_ARGS(command->opcode) != len) ? ft_error(ERR_COUNT_ARGS) : 0;
 }
 
@@ -74,6 +78,11 @@ static	void	check_arguments(t_command *command)
 ** quantity of arguments.
 */
 
+/*
+ * Читаем аргументы из массива, где они в строках.
+ * ft_strstr находит вхождение
+ */
+
 static	void	skip_args(char *s, char **arr, int *j)
 {
 	int			i;
@@ -82,13 +91,25 @@ static	void	skip_args(char *s, char **arr, int *j)
 
 	i = 0;
 	k = 0;
+	// проходимся по каждому аргументу
 	while (arr[i])
 	{
+		// находим первое вхождение строки аргумента во взятой строке и вычитаем от общей длины.
 		*j = ft_strstr(s + *j, arr[i]) - s + ft_strlen(arr[i]);
+		// если ещё есть аргумент, то
 		if (arr[i + 1])
 		{
+			// находим его первое вхождение второй строки в первой и отнимаем от первой строки.
 			k = ft_strstr(s + *j, arr[i + 1]) - s;
 			q = 0;
+			// в цикле пока j, который хранит значение цифры, где остановился, найдя первый аргумент
+			// меньше вхождения второй строки, который хранится в k
+			/*
+			 * Так мы двигаемся от первого аргумента ко второму.
+			 * Если есть запятая, то q увеличиваем, идём дальше.
+			 * Если запятая есть одна, то отлично. Если их больше, то ошибка.
+			 * Так мы сравниваем 1 и второй аргумент, а дальше 2 и 3, если 3-ий есть.
+			 */
 			while (*j < k)
 			{
 				(s[*j] == SEPARATOR_CHAR) ? q++ : 0;
@@ -112,16 +133,38 @@ static	void	array_map(char **arr, void (*f)(char **))
 	}
 }
 
+void            print_operation(t_command *opera)
+{
+	t_arg       *tmp;
+	int         i;
+
+	i = 1;
+	tmp = opera->args;
+	printf("Operation name: %s\nLabel: %s\n", opera->name, (char *)opera->labels->content);
+	while (tmp)
+	{
+		printf("ARG #%d: %s\n SIZE: %d\n", i, (tmp->flag == 1) ? tmp->num_value : tmp->str_value, tmp->arg_size);
+		tmp = tmp->next;
+		i++;
+	}
+}
+
 void			get_arguments(t_asm *asmb, t_command *new, int *j)
 {
 	char		**arr;
 
 	if (!(arr = ft_strsplit(asmb->line + *j, SEPARATOR_CHAR)))
 		ft_error(ERR_MALLOC);
+	// очищает от пробелов и табуляц;
 	array_map(arr, ft_strtrim);
+	// добавляет все аргументы в операцию.
 	foreach_arg(arr, new);
+	print_operation(new);
+	// TODO проверка правильно расставленных запятых.
 	skip_args(asmb->line, arr, j);
+	// TODO очистика всего массива
 	array_map(arr, ft_strdel);
 	free(arr);
+	// TODO подсчет кол-ва аргументов
 	check_arguments(new);
 }

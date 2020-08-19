@@ -50,7 +50,7 @@ t_operation     *init_op_list(t_asm *bler)
  * Далее проверяем на операции.
  */
 
-void            parse_lbl_op(t_asm *bler) // TODO get_lca
+void            parse_lbl_op(t_asm *bler)
 {
     t_operation *oper;
 
@@ -60,9 +60,11 @@ void            parse_lbl_op(t_asm *bler) // TODO get_lca
         add_lbls(bler, oper);
         add_op(bler, oper);
     }
+    //TODO 	if (asmb->line)
+	//TODO		(!check_line(asmb->line + j)) ? ft_error(ERR_STRING) : 0;
 }
 
-void            parse_commands(t_asm *bler)
+void            parse_operations(t_asm *bler)
 {
     while (get_next_line(bler->fd, &bler->line) > 0)
     {
@@ -70,4 +72,5 @@ void            parse_commands(t_asm *bler)
         pass_comments(bler->line);
         parse_lbl_op(bler);
     }
+    // TODO check_last_line(bler)
 }
