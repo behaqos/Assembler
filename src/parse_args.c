@@ -156,7 +156,7 @@ void                *parse_data(char *arg, int type, int *detector)
 	{
 		if (arg[i] == '%' && arg[i + 1] == ':')
 		{
-			i++;
+			i += 2;
 			*detector = STRING_VAL;
 			if (!(str = ft_strsub(arg + i, 0, ft_strlen(arg) - 1)))
 				return (NULL);

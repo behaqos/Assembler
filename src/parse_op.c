@@ -49,16 +49,19 @@ int             check_op(t_asm *bler)
 {
     int         i;
     int         start;
-
+	char        *str;
     start = 0;
     i = 0; // TODO пропускает первую операцию. Почему?
+
+    str = bler->line;
     if (check_label(bler))
-        bler->line = ft_strchr(bler->line, ':') + 1;
-	while (bler->line[i] == ' ' || bler->line[i] == '\t')
-		i++;
-    while (bler->line[i] && ft_isalpha(bler->line[i]))
+    	//TODO здесь нельзя передвигать указатель. Так как потом очистить память будет невозможно.
+        str = ft_strchr(bler->line, ':') + 1;
+	while (*str == ' ' || *str == '\t')
+		str++;
+    while (str[i] && ft_isalpha(str[i]))
         i++;
-    if (i > 0 && find_oper(bler->line, i) != -1)
+    if (i > 0 && find_oper(str, i) != -1)
         return (TRUE);
     else
         return (FALSE);
@@ -66,22 +69,33 @@ int             check_op(t_asm *bler)
 
 /*
  * GNLINE is (bler->line[bler->sym])
- * Пропускаем, пока не встретим особые символы.
- * Если пропускаем символы
+ * Пропускаем все пробелы и табуляции в pass_voids
+ * В цикле проверяем, что идут буквы. Если да, то считаем их кол-во.
+ * Далее смотрим, что после букв стоит табуляция или пробел, которые разделяют
+ * операции от аргументов. А если их нет, то выводим ошибку.
+ * Дальше отправляем в ft_strsub, чтобы получить отрезок от основной строки.
  */
 //FIXME должен с правильной точки начать копировать имя, иначе имя теряется и не находитс имя операции.
 void             parse_op(t_asm *bler, t_operation *oper)
 {
     int         start;
+	int         len;
 
+	len = 0;
+    start = 0;
     bler->sym = 0;
+    pass_voids(bler);
+    start = bler->sym;
 	while (GNLINE && GNLINE != '-' && GNLINE != '\t' &&
 			GNLINE != ' ' && GNLINE != '%' && !ft_isdigit(GNLINE))
+	{
+		len++;
 		bler->sym++;
+	}
 	if (GNLINE != ' ' && GNLINE != '\t' &&
 		GNLINE != '%' && GNLINE != '-')
 		error_printf(bler, ERROR_LINE, bler->line);
-	oper->name = ft_strsub(bler->line, start, bler->sym);
+	oper->name = ft_strsub(bler->line, start, len);
 	oper->op_code = find_oper(oper->name, ft_strlen(oper->name));
 }
 
@@ -96,6 +110,7 @@ void             add_op(t_asm *bler, t_operation *oper)
     if (check_op(bler))
     {
         parse_op(bler, oper);
+        printf("Operation name: %s\n", oper->name);
         parse_args(bler, oper);
     }
     else
