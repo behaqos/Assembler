@@ -139,4 +139,16 @@ void                pass_comments(char *str);
 void                pass_voids(t_asm *bler);
 void                error_printf(t_asm *bler, char *text, char *line);
 
+/*
+ * Function of parsing arguments;
+ */
+
+void                set_args(t_asm *bler, t_operation *oper, char **args);
+void                join_argument(t_operation *oper, void *arg, int type, int detector);
+
+/*
+ * Утилиты
+ */
+void                print_operation(t_asm *bler, t_operation *opera);
+
 #endif

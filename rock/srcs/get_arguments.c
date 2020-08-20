@@ -79,8 +79,16 @@ static	void	check_arguments(t_command *command)
 */
 
 /*
- * Читаем аргументы из массива, где они в строках.
- * ft_strstr находит вхождение
+ * В цикле берём по одному аргументу, где они хранятся в строках.
+ * в j - хранится итератор с количеством символов после табуляци/пробелов и имени операции,
+ * где непосредственно подходит к аргументам.
+ * ft_strstr находит вхождение строки. В неё подаются строка из GNL и суммируется с итераторм j, чтобы
+ * пропустить пробелы/табуляции, имя операции и быть на позиции к аргументам, а второй строкой сам аргумент.
+ * Когда мы доходим до точки начала аргумента, из ft_strstr приходит итератор, который показывает начало букв второй строки
+ * Когда сложим строку с итератором, то перейдем сразу к аргументам.
+ * В ft_strstr получаем полную линию, которая начинается с аргументов и сравниваем с аргументом.
+ * Когда находим начало букв настоящего аргумента в строке, то возвращаем итератор.
+ * Далее отнимаем от строки + 
  */
 
 static	void	skip_args(char *s, char **arr, int *j)
@@ -94,7 +102,6 @@ static	void	skip_args(char *s, char **arr, int *j)
 	// проходимся по каждому аргументу
 	while (arr[i])
 	{
-		// находим первое вхождение строки аргумента во взятой строке и вычитаем от общей длины.
 		*j = ft_strstr(s + *j, arr[i]) - s + ft_strlen(arr[i]);
 		// если ещё есть аргумент, то
 		if (arr[i + 1])
@@ -133,19 +140,30 @@ static	void	array_map(char **arr, void (*f)(char **))
 	}
 }
 
-void            print_operation(t_command *opera)
-{
-	t_arg       *tmp;
-	int         i;
+void            print_operation(t_command *opera) {
+	t_command *oper;
+	int i = 1;
+	oper = opera;
+	t_arg *args;
 
-	i = 1;
-	tmp = opera->args;
-	printf("Operation name: %s\nLabel: %s\n", opera->name, (char *)opera->labels->content);
-	while (tmp)
-	{
-		printf("ARG #%d: %s\n SIZE: %d\n", i, (tmp->flag == 1) ? tmp->num_value : tmp->str_value, tmp->arg_size);
-		tmp = tmp->next;
+	args = oper->args;
+	printf("Operation name: %s\nLabel: %s\n\n", oper->name, (char *) oper->labels->content);
+	while (args) {
+		printf("ARG #%d ", i);
+		if (args->flag == 1)
+			printf("Value: %d\n", args->num_value);
+		else
+			printf("Value: %s\n", args->str_value);
+		//TYPES
+		if (args->type == T_REG)
+			printf("                Type:%s", "T_REG");
+		else if (args->type == T_DIR)
+			printf("                Type:%s", "T_DIR");
+		else if (args->type == T_IND)
+			printf("                Type:%s", "T_IND");
+		args = args->next;
 		i++;
+		printf("\n");
 	}
 }
 
@@ -159,7 +177,7 @@ void			get_arguments(t_asm *asmb, t_command *new, int *j)
 	array_map(arr, ft_strtrim);
 	// добавляет все аргументы в операцию.
 	foreach_arg(arr, new);
-	print_operation(new);
+//	print_operation(new);
 	// TODO проверка правильно расставленных запятых.
 	skip_args(asmb->line, arr, j);
 	// TODO очистика всего массива
