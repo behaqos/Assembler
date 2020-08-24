@@ -58,7 +58,7 @@ static	void	check_arguments(t_command *command)
 	{
 		// Если количество аргументов больше трёх, ошибка.
 		(len > 3) ? ft_error(ERR_TOO_MUCH_ARGS) : 0;
-		// Если нет g_table[i - 1].args[j].arg[(int)k], который принимает код операции, длину и типа, то огибка
+		//В этой операции он ищет по коду операции
 		if (!ARG(command->opcode, len, arg->type))
 			ft_error(ERR_NOT_COMPATIBLE_ARG);
 		// инкрементируем кол-во аргументов.

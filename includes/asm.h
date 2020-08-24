@@ -13,13 +13,21 @@
 # define ERROR_ARGS "ERROR: This line have not valid arguments.\n"
 # define ERROR_ALLOCATE "ERROR: Didn't allocate memory.\n"
 # define ERROR_ARGS_TYPE "ERROR: Some argument have wrong type.\n"
-# define ERROR_TYPE_SIZE "ERROR: Type of arguments is invalid\n"
+# define ERROR_TYPE_SIZE "ERROR: Type of arguments is invalid.\n"
+# define ERROR_SEVERAL_COMMAS "ERROR:  Line have several commas between arguments.\n"
+# define ERROR_WRONG_COUNT_ARGS "ERROR: Operation have wrong count of arguments.\n"
+# define ERROR_TYPE_OF_OPER "ERROR: Operation have wrong type in arguments.\n"
+
+
 # define MAX_UINT 4294967295
 # define NEARLY_MAX_UINT 429496729
 # define WRONG_TYPE -1
 # define SIZE_T_IND 2
 # define SIZE_T_DIR 2
 # define SIZE_T_REG 1
+
+# define CHECK_TYPE(op_code, i, type) g_op_tab[op_code - 1].args[i].arg[(int)type]
+
 
 typedef struct      s_array
 {
@@ -32,9 +40,15 @@ typedef struct      s_op_list
 	char            args_num;
 	t_array         args[3];
 	char            op_code;
-	char            codage;
+	char            codage; //что это?
 	char            lbl_size;
 }                   t_op_list;
+
+/*
+ * In args - all arguments.
+ * In arg - is code of types of arguments.
+ * In args c
+ */
 
 static t_op_list  g_op_tab[16] = {
 		{"live", 1, {{{0, 1, 0}}, {{0, 0, 0}}, {{0, 0, 0}}}, 1, 0, 4},
@@ -54,6 +68,7 @@ static t_op_list  g_op_tab[16] = {
 		{"lfork", 1, {{{0, 1, 0}}, {{0, 0, 0}}, {{0, 0, 0}}}, 15, 1, 2},
 		{"aff", 1, {{{1, 0, 0}}, {{0, 0, 0}}, {{0, 0, 0}}}, 16, 1, 4}
 };
+
 
 typedef enum {
 	NUM_VAL = 1,
@@ -78,7 +93,7 @@ typedef  struct     s_arg
     char            *str_val;
     int             num_val;
     int             detector;
-    int            args_size;
+    int             args_size;
     int             type;
     struct s_arg    *next;
 }                   t_argument;
@@ -145,7 +160,8 @@ void                error_printf(t_asm *bler, char *text, char *line);
 
 void                set_args(t_asm *bler, t_operation *oper, char **args);
 void                join_argument(t_operation *oper, void *arg, int type, int detector);
-
+void                check_commas(t_asm *bler, t_operation *oper, char **args);
+void                check_arg_count_type(t_asm *bler, t_operation *oper);
 /*
  * Утилиты
  */

@@ -184,4 +184,6 @@ void                set_args(t_asm *bler, t_operation *oper, char **args)
 		join_argument(oper, arg, type, detector);
 		i++;
 	}
+	check_commas(bler, oper, args);
+	check_arg_count_type(bler, oper);
 }

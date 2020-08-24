@@ -106,6 +106,12 @@ typedef	struct			s_table
 	char				label_size : 4;
 }						t_table;
 
+/*
+ * if someone of this have 1 it's mean:
+ * arg[0] =  is T_REG;
+ * arg[1] = is T_DIR;
+ * arg[2] = is T_IND
+ */
 static t_table		g_table[16] = {
 	{"live", 1, {{{0, 1, 0}}, {{0, 0, 0}}, {{0, 0, 0}}}, 1, 0, 4},
 	{"ld", 2, {{{0, 1, 1}}, {{1, 0, 0}}, {{0, 0, 0}}}, 2, 1, 4},

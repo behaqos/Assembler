@@ -29,8 +29,11 @@ void           		clean_voids(char **str)
 }
 
 /*
- * Проходимся по аргументам. В ft_strstr передаём позицию, с которой начинаются аргументы.
- * И передаём аргумент, который запарсили в виде строки. ft_strstr должен пропустить операцию.
+ * Запускаем аргументы для подбора в цикле.
+ * Внутри цикла следующее условие:
+ * 1. Найти первое вхождение аргумента в строке и вычислить строку + длина текста аргумента.
+ * Так мы передвинемся к необходимой позиции после первого аргумента.
+ * Если есть второй аргумент, то находим позицию
  */
 
 void                check_commas(t_asm *bler, t_operation *oper, char **args)
@@ -39,16 +42,68 @@ void                check_commas(t_asm *bler, t_operation *oper, char **args)
 	int             j;
 	char            *str;
 	int             sym;
+	int             comm;
 
-	str = bler->line + bler->sym;
+	i = 0;
+	j = 0;
+	str = bler->line;
 	sym = bler->sym;
 	while (args[i])
 	{
-		sym = ft_strstr(str + sym, args[i]);
-		sym = sym - str +
-
+		sym = ft_strstr(str + sym, args[i]) - str + ft_strlen(args[i]);
+		if (args[i + 1] != NULL)
+		{
+			j = ft_strstr(str + sym, args[i + 1]) - str;
+			comm = 0;
+			while (sym < j)
+				if (str[sym++] == SEPARATOR_CHAR)
+					comm++;
+			if (comm > 1 || comm < 1)
+				error_printf(bler, ERROR_SEVERAL_COMMAS, bler->line);
+		}
+		i++;
 	}
 }
+
+void                free_split(char **args)
+{
+	int             i;
+
+	i = 0;
+	while (args[i])
+		free(args[i++]);
+	free(args);
+}
+
+/*
+ * TODO Необходимо сделать проверку типов аргументов, которые должна иметь операция.
+ */
+
+void                check_arg_count_type(t_asm *bler, t_operation *oper)
+{
+	int             i;
+	t_argument      *argm;
+
+	i = 0;
+	argm = oper->args;
+	while (argm != NULL)
+	{
+		if (i++ > 3)
+			error_printf(bler, ERROR_WRONG_COUNT_ARGS, bler->line);
+		if (!CHECK_TYPE(oper->op_code, i, argm->type))
+			error_printf(bler, ERROR_TYPE_OF_OPER, bler->line);
+		argm = argm->next;
+	}
+}
+
+/*
+ * В началае все аргументы выводим в сплит отдельными строками в массиве.
+ * Далее очищаем каждую строку от лишних пробелов и табуляций, если они есть.
+ * Setting arguments to our structure t_operation.
+ * it's error.
+ * Freeing memory of split in free_split.
+ * Checking count of arguments in operation.
+ */
 
 void                parse_args(t_asm *bler, t_operation *oper)
 {
@@ -62,12 +117,7 @@ void                parse_args(t_asm *bler, t_operation *oper)
 	while (args[i])
 		clean_voids(&args[i++]);
 	set_args(bler, oper, args);
-	print_operation(bler, oper);
-//	// TODO проверка правильно расставленных запятых.
-	check_commas(bler, oper, args);
-//	// TODO очистика всего массива, выделенного для сплита аргументов.
-//	array_map(arr, ft_strdel);
-//	free(arr);
+	free_split(args);
 //	// TODO подсчет кол-ва аргументов
 //	check_arguments(new);
 }
