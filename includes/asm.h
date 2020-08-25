@@ -21,18 +21,29 @@
 
 # define MAX_UINT 4294967295
 # define NEARLY_MAX_UINT 429496729
-# define WRONG_TYPE -1
 # define SIZE_T_IND 2
 # define SIZE_T_DIR 2
 # define SIZE_T_REG 1
 
-# define CHECK_TYPE(op_code, i, type) g_op_tab[op_code - 1].args[i].arg[(int)type]
+/*
+ * op_code - 1 because g_op_tab starting with 0.
+ */
 
+# define CHECK_TYPE(op_code, num, type) g_op_tab[op_code - 1].args[num].arg[(int)type]
+# define CHECK_ARGS_COUNT(op_code) g_op_tab[op_code - 1].args_num
 
 typedef struct      s_array
 {
 	char            arg[3];
 }                   t_array;
+
+/*
+ * Recording name of operation;
+ * Recording count of agruments;
+ * args keeping - keeping arguments which indicate to type of argmunet.
+ * codage -
+ * lbl_size keeping size for translation to byte-code.
+ */
 
 typedef struct      s_op_list
 {
@@ -49,6 +60,7 @@ typedef struct      s_op_list
  * In arg - is code of types of arguments.
  * In args c
  */
+//# define CHECK_TYPE(op_code, num, type) g_op_tab[op_code].args[num].arg[(int)type]
 
 static t_op_list  g_op_tab[16] = {
 		{"live", 1, {{{0, 1, 0}}, {{0, 0, 0}}, {{0, 0, 0}}}, 1, 0, 4},

@@ -185,5 +185,6 @@ void                set_args(t_asm *bler, t_operation *oper, char **args)
 		i++;
 	}
 	check_commas(bler, oper, args);
+	//print_operation(bler, oper);
 	check_arg_count_type(bler, oper);
 }

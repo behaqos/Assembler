@@ -84,6 +84,7 @@
 
 # define NAME(i)		g_table[i - 1].name
 # define COUNT_ARGS(i)	g_table[i - 1].args_count
+//command->opcode, len, arg->type
 # define ARG(i, j, k)	g_table[i - 1].args[j].arg[(int)k]
 # define OPCODE(i) 		g_table[i].opcode
 # define CODAGE(i) 		g_table[i - 1].codage
@@ -95,6 +96,7 @@ typedef struct
 {
 	char				arg[3];
 }						t_arr;
+
 
 typedef	struct			s_table
 {
@@ -110,7 +112,7 @@ typedef	struct			s_table
  * if someone of this have 1 it's mean:
  * arg[0] =  is T_REG;
  * arg[1] = is T_DIR;
- * arg[2] = is T_IND
+ * arg[2] = is T_IND;
  */
 static t_table		g_table[16] = {
 	{"live", 1, {{{0, 1, 0}}, {{0, 0, 0}}, {{0, 0, 0}}}, 1, 0, 4},

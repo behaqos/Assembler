@@ -55,13 +55,15 @@
 
 typedef char	t_arg_type;
 
-#define T_REG					1
-#define T_DIR					2
-#define T_IND					3
 #define T_LAB					8
 
 
-
+enum {
+	WRONG_TYPE = -1,
+	T_REG,
+	T_DIR,
+	T_IND
+};
 /*
 **
 */
