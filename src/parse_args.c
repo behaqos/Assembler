@@ -141,8 +141,4 @@ void                parse_args(t_asm *bler, t_operation *oper)
 	}
 	set_args(bler, oper, args);
 	free_split(args);
-//	// TODO подсчет кол-ва аргументов
-//	check_arguments(new);
 }
-
-//TODO detector
