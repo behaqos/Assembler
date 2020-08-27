@@ -3,8 +3,8 @@
 
 
 /*
- * Проверяем строку на наличие символов комментария
- * Если ещё не достигнуто конца строки, то обнуляем эту строку.
+ * At first checking all symbols in string. If string have # or ;
+ * and it's not end of line - this is comment string.
  */
 void            pass_comments(char *str)
 {
@@ -12,8 +12,8 @@ void            pass_comments(char *str)
 
     i = 0;
     while (str[i] &&
-           str[i] != ';' &&
-           str[i] != '#')
+		    (str[i] != ';' &&
+           str[i] != '#'))
         i++;
     if (str[i] != '\0')
         ft_bzero(str, ft_strlen(str));

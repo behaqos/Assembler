@@ -1,9 +1,9 @@
 .name "Tester"
 .comment "Test comment"
 
-    live    %5
-    ld      %5,r2
-    st      r3,%5
+#    live    %5
+#    ld      %5,r2
+    st      r3,5
     add     r1,r6
     sub     r1,r2,r3
     and     r1,%3,r5

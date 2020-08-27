@@ -4,12 +4,12 @@ void                print_operation(t_asm *bler, t_operation *opera)
 {
 	t_operation     *oper;
 	int             i = 1;
-	oper = opera;
 	t_argument      *args;
 
-	args = oper->args;
+	oper = opera;
+	args = opera->args;
 	printf("\nString: %s\n\n", bler->line);
-	printf("Operation name: %s\nLabel: %s\n\n", oper->name, oper->lbl->str);
+	printf("Operation name: %s\nLabel: %s\n\n", oper->name, (oper->lbl) ? oper->lbl : "NULL");
 	while (args)
 	{
 		printf("ARG #%d ", i);
@@ -28,5 +28,4 @@ void                print_operation(t_asm *bler, t_operation *opera)
 		i++;
 		printf("\n");
 	}
-	exit(0);
 }

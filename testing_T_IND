@@ -1,0 +1,6 @@
+.name "Tester"
+.comment "Test comment"
+
+#    live    %5
+#    ld      %5,r2
+    st      r3,%5

@@ -35,6 +35,7 @@ void                *parse_data(char *arg, int type, int *detector)
 		}
 		else if (arg[i] == '%')
 		{
+			i++;
 			*detector = NUM_VAL;
 			if (!(value_num = (unsigned *)ft_memalloc(sizeof(unsigned))))
 				return (NULL);
@@ -186,4 +187,5 @@ void                set_args(t_asm *bler, t_operation *oper, char **args)
 	}
 	check_commas(bler, oper, args);
 	check_arg_count_type(bler, oper);
+	print_operation(bler, oper);
 }
