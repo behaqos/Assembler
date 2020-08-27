@@ -13,11 +13,10 @@ void                print_operation(t_asm *bler, t_operation *opera)
 	while (args)
 	{
 		printf("ARG #%d ", i);
-		if (args->detector == 1)
+		if (args->detector == NUM_VAL)
 			printf("Value: %d\n", args->num_val);
-		else
+		else if (args->detector == STRING_VAL)
 			printf("Value: %s\n", args->str_val);
-		//TYPES
 		if (args->type == T_REG)
 			printf("                Type:%s", "T_REG");
 		else if (args->type == T_DIR)

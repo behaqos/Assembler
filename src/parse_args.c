@@ -91,8 +91,7 @@ int                 check_type(int op_code, int type)
  * At first checking number of arguments. If there more 3 arguments - it's wrong player.
  * In CHECK TYPE we are checking type of arguments which should have operations.
  *
- * TODO Необходимо сделать проверку типов аргументов, которые должна иметь операция.
- */
+*/
 
 void                check_arg_count_type(t_asm *bler, t_operation *oper)
 {
@@ -105,7 +104,6 @@ void                check_arg_count_type(t_asm *bler, t_operation *oper)
 	{
 		if (num > 3)
 			error_printf(bler, ERROR_WRONG_COUNT_ARGS, bler->line);
-		//if (!CHECK_TYPE(oper->op_code, num, argm->type))
 			//FIXME почему выдаёт ошибку на аргумент, тип которого сходится?
 			// op_code = номер операции; num = номер аргумента; type = тип аргумента
 		if(CHECK_TYPE(oper->op_code, num,argm->type) == 0)
