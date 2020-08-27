@@ -133,7 +133,8 @@ void                parse_args(t_asm *bler, t_operation *oper)
 	args = ft_strsplit(bler->line + bler->sym, SEPARATOR_CHAR);
 	if (!(args))
 		error_printf(bler, ERROR_ARGS, bler->line);
-	while (args[i]) {
+	while (args[i])
+	{
 		args[i] = clean_voids(args[i]);
 		i++;
 	}

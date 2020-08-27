@@ -9,7 +9,7 @@ void                print_operation(t_asm *bler, t_operation *opera)
 	oper = opera;
 	args = opera->args;
 	printf("\nString: %s\n\n", bler->line);
-	printf("Operation name: %s\nLabel: %s\n\n", oper->name, (oper->lbl) ? oper->lbl : "NULL");
+	printf("Operation name: %s\nLabel: %s\n\n", oper->name, (oper->lbl->str) ? oper->lbl->str : "NULL");
 	while (args)
 	{
 		printf("ARG #%d ", i);

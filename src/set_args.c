@@ -25,7 +25,9 @@ void                *parse_data(char *arg, int type, int *detector)
 	}
 	else
 	{
-		if (arg[i] == '%' && arg[i + 1] == ':')
+		if (arg[i] == '%')
+			i++;
+		if (arg[i + 1] == ':')
 		{
 			i += 2;
 			*detector = STRING_VAL;
@@ -33,9 +35,8 @@ void                *parse_data(char *arg, int type, int *detector)
 				return (NULL);
 			return ((void *) str);
 		}
-		else if (arg[i] == '%')
+		else
 		{
-			i++;
 			*detector = NUM_VAL;
 			if (!(value_num = (unsigned *)ft_memalloc(sizeof(unsigned))))
 				return (NULL);

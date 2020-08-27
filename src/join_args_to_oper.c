@@ -65,6 +65,7 @@ void                join_argument(t_operation *oper, void *arg, int type, int de
 		error_printf(NULL, ERROR_ALLOCATE, NULL);
 	new_arg->type = type;
 	join_arg_to_oper(oper, new_arg);
+	new_arg->detector = detector;
 	if (detector == STRING_VAL)
 	{
 		new_arg->str_val = (char *)arg;

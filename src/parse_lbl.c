@@ -18,13 +18,13 @@ int             check_label(t_asm *bler)
     while (bler->line[i] && bler->line[i] != ':')
     {
         if (!ft_strchr(LABEL_CHARS, bler->line[i]))
-            return (0);
+	        return (0);
         i++;
     }
     if (i > 0 && bler->line[i] == ':')
         return (1);
     else
-        return (0);
+	    return (0);
 }
 
 void            add_lbl_list(t_asm *bler, char *str)

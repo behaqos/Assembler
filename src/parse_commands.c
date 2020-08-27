@@ -60,6 +60,7 @@ void            parse_lbl_op(t_asm *bler)
         add_lbls(bler, oper);
         add_op(bler, oper);
     }
+    //TODO надо сделать проверку ниже, чтобы выкинуть ошибку при неправильном лейбле (имени или отсутствия двоеточия)
     //TODO 	if (asmb->line)
 	//TODO		(!check_line(asmb->line + j)) ? ft_error(ERR_STRING) : 0;
 }
@@ -70,7 +71,7 @@ void            parse_operations(t_asm *bler)
     {
         bler->line_len = ft_strlen(bler->line);
         pass_comments(bler->line);
-        parse_lbl_op(bler);
+		parse_lbl_op(bler);
     }
     // TODO check_last_line(bler)
 }
