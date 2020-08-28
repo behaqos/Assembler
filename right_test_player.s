@@ -1,9 +1,11 @@
 .name "Tester"
 .comment "Test comment"
 
-# Не работает парсинг операции zjmp.
-#TODO путается лейбл с именем при парсинге. Исправить как можно скорее.
-jumping: zjmp    %5
+#oreo:
+#    or      2,%3,r4
+
+#TODO Не работает парсинг операции zjmp. путается лейбл с именем при парсинге. Исправить как можно скорее.
+#jumping: zjmp    %5
     ldi     %5,r5,r5
     sti     r5,%4,r5
     fork    %5
@@ -18,6 +20,5 @@ jumping: zjmp    %5
     #    sub     r1,r6,r7
     #    and     5,5,r7
    # core:
-      #  or      2,%3,r4
      # xorrrrr:
        #   xor     55,%5,r5

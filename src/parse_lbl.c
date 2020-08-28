@@ -78,7 +78,10 @@ void            add_lbls(t_asm *bler, t_operation *oper)
             return ;
         free(bler->line); // применил вместо ft_strdel
         if (get_next_line(bler->fd, &bler->line) > 0 && bler->line)
-            bler->line_len = ft_strlen(bler->line);
+        {
+        	bler->line_len = ft_strlen(bler->line);
+        	bler->sym = 0;
+        }
     }
 }
 

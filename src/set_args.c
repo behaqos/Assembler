@@ -27,7 +27,7 @@ void                *parse_data(char *arg, int type, int *detector)
 	{
 		if (arg[i] == '%')
 			i++;
-		if (arg[i + 1] == ':')
+		if (arg[i] == ':')
 		{
 			i += 2;
 			*detector = STRING_VAL;

@@ -1,6 +1,22 @@
 #include "asm.h"
 #define GNLINE bler->line[bler->sym]
 
+char            *ft_assm_strsub(char *src, int start, int len)
+{
+	int         i;
+	char        *res;
+
+	i = 0;
+	if (!(res = (char *)ft_memalloc(sizeof(char) * (len + 1))))
+		error_printf(NULL, ERROR_ALLOCATE, NULL);
+	while (i < len)
+	{
+		res[i] = src[start + i];
+		i++;
+	}
+	return (res);
+}
+
 /*
  * Здесь ищется операция по названию из глобальной переменной выше.
  */
@@ -63,7 +79,6 @@ void             parse_op(t_asm *bler, t_operation *oper)
 
 	len = 0;
     start = 0;
-    bler->sym = 0;
     pass_voids(bler);
     start = bler->sym;
 	while (GNLINE && GNLINE != '-' && GNLINE != '\t' &&
@@ -75,7 +90,7 @@ void             parse_op(t_asm *bler, t_operation *oper)
 	if (GNLINE != ' ' && GNLINE != '\t' &&
 		GNLINE != '%' && GNLINE != '-')
 		error_printf(bler, ERROR_LINE, bler->line);
-	oper->name = ft_strsub(bler->line, start, len);
+	oper->name = ft_assm_strsub(bler->line, start, bler->sym - start);
 	oper->op_code = find_oper(oper->name, ft_strlen(oper->name));
 }
 

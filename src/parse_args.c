@@ -104,7 +104,6 @@ void                check_arg_count_type(t_asm *bler, t_operation *oper)
 	{
 		if (num > 3)
 			error_printf(bler, ERROR_WRONG_COUNT_ARGS, bler->line);
-			//FIXME почему выдаёт ошибку на аргумент, тип которого сходится?
 			// op_code = номер операции; num = номер аргумента; type = тип аргумента
 		if(CHECK_TYPE(oper->op_code, num,argm->type) == 0)
 			error_printf(bler, ERROR_TYPE_OF_OPER, bler->line);
