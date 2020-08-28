@@ -72,6 +72,7 @@ void            parse_operations(t_asm *bler)
         bler->line_len = ft_strlen(bler->line);
         pass_comments(bler->line);
 		parse_lbl_op(bler);
+		b
     }
     // TODO check_last_line(bler)
 }
