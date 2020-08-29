@@ -141,11 +141,12 @@ void				add_argument(t_command *command, char type,
 	if (flag == STRING_VAL)
 	{
 		new->str_value = (char *)data;
-		new->flag = 1;
+		new->flag = STRING_VAL;
 	}
 	else if (flag == UINT_VAL)
 	{
 		new->num_value = ((int *)data)[0]; //TODO почему ячейку передает?
+		new->flag = UINT_VAL;
 		free(data);
 	}
 	new->type = type;

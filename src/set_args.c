@@ -12,11 +12,34 @@ unsigned            *parse_t_reg(char *arg, int *detector)
 }
 
 /*
+ * Plus 2 than to miss symbol ':' and space or tabulation.
+ */
+
+char                *parse_data_text(char *arg, char *str, int *detector, int i)
+{
+	if (!(str = ft_strsub(arg + i, 0, ft_strlen(arg) - 1)))
+		error_printf(NULL, ERROR_ALLOCATE, NULL);
+	*detector = STRING_VAL;
+	return ((void *) str);
+
+}
+
+char                *parse_data_num(char *arg, int *detector, int i)
+{
+	unsigned        *value_num;
+
+	if (!(value_num = (unsigned *)ft_memalloc(sizeof(unsigned))))
+		return (NULL);
+	*value_num = (unsigned)ft_atoi(arg + i);
+	*detector = NUM_VAL;
+	return ((void *)value_num);
+}
+
+/*
  * в этой функции в зависимости от типа аргумента парсим данные.
  * Если это T_REG, то парсим цифру от r переменной.
  * Если аргумент начинается с %, а дальше : - значит это метка, копируем её как строку.
  * Если просто %, то парсим самое значение как цифру.
- * TODO разбей эту функцию
  */
 
 void                *parse_data(char *arg, int arg_type, int *detector)
@@ -27,34 +50,15 @@ void                *parse_data(char *arg, int arg_type, int *detector)
 
 	i = 0;
 	if (arg_type == T_REG)
-	{
-		value_num = parse_t_reg(arg, &*detector);
-//		if (!(value_num = (unsigned *)ft_memalloc(sizeof(unsigned))))
-//			return (NULL);
-//		*value_num = ft_atoi(arg + 1);
-//		*detector = NUM_VAL;
-//		return ((void *)value_num);
-	}
+		return (parse_t_reg(arg, &*detector));
 	else
 	{
 		if (arg[i] == '%')
 			i++;
 		if (arg[i] == ':')
-		{
-			i += 2;
-			if (!(str = ft_strsub(arg + i, 0, ft_strlen(arg) - 1)))
-				error_printf(NULL, ERROR_ALLOCATE, NULL);
-			*detector = STRING_VAL;
-			return ((void *) str);
-		}
+			return (parse_data_text(arg, &*str, &*detector, ++i));
 		else
-		{
-			if (!(value_num = (unsigned *)ft_memalloc(sizeof(unsigned))))
-				return (NULL);
-			*value_num = (unsigned)ft_atoi(arg + i); // FIXME записывается NULL и обнуляет переменную. А должен записать ноль.
-			*detector = NUM_VAL;
-			return ((void *)value_num);
-		}
+			return (parse_data_num(arg, &*detector, i));
 	}
 }
 
@@ -94,7 +98,7 @@ int                 check_reg_num(char *str)
 /*
  * Если есть % и :, значит дальше будет метка,
  * метка парсится отдельно.
- * Дальше смотрим - если дальше идут до конца цифры, то отлично.
+ * Дальше смотрим - если дальше идут до конца цифры, то парсим только цифры.
  */
 
 int                 check_t_dir(char *str)
@@ -121,7 +125,8 @@ int                 check_t_dir(char *str)
 }
 
 /*
- *
+ * If string begin with ':' that mean label;
+ * Else if have digits, it's IND
  */
 
 int                 check_t_ind(char *str)

@@ -31,7 +31,7 @@ t_operation     *init_op_list(t_asm *bler)
     t_operation *new_op;
 
     tmp = bler->oper;
-    while (tmp && bler->oper->next)
+    while (tmp && tmp->next)
         tmp = tmp->next;
     if (!(new_op = (t_operation *)ft_memalloc(sizeof(t_operation))))
         error_printf(bler, "Error: Program did not allocate memory\n", NULL);
@@ -73,6 +73,7 @@ void            parse_operations(t_asm *bler)
         pass_comments(bler->line);
 		parse_lbl_op(bler);
 		bler->sym = 0;
-    }//FIXME следующую операцию не читает. Возможно, из-за того, что не обнулён bler->sym.
+    }
+	//TODO лишний символ : записывает в название метки, когда парсит аргументы операции.
     // TODO check_last_line(bler) <----------------- Обрати внимание, может поэтому.
 }

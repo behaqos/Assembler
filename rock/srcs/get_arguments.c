@@ -136,13 +136,13 @@ void            print_operation(t_command *opera) {
 	t_arg *args;
 
 	args = oper->args;
-	printf("Operation name: %s\nLabel: %s\n\n", oper->name, (char *) oper->labels->content);
+	printf("Operation name: %s\n\n", oper->name);
 	while (args) {
 		printf("ARG #%d ", i);
-		if (args->flag == 1)
-			printf("Value: %d\n", args->num_value);
-		else
+		if (args->flag == -1)
 			printf("Value: %s\n", args->str_value);
+		else
+			printf("Value: %d\n", args->num_value);
 		//TYPES
 		if (args->type == T_REG)
 			printf("                Type:%s", "T_REG");
@@ -166,7 +166,7 @@ void			get_arguments(t_asm *asmb, t_command *new, int *j)
 	array_map(arr, ft_strtrim);
 	// добавляет все аргументы в операцию.
 	foreach_arg(arr, new);
-//	print_operation(new);
+	print_operation(new);
 	// TODO проверка правильно расставленных запятых.
 	skip_args(asmb->line, arr, j);
 	// TODO очистика всего массива
