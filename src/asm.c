@@ -17,13 +17,20 @@ void            check_file(t_asm *bler, char *str)
         error_printf(bler, "Error: Can't to read this file\n", NULL);
 }
 
-//TODO сделать проверку на *.s расширение.
+void            check_extension(const char *str)
+{
+	if (ft_strcmp(&str[ft_strlen(str) - 2], ".s") == 0)
+		return ;
+	error_printf(NULL, ERROR_FILE_EXTENSION, NULL);
+}
 
 int             main(int argc, char **argv)
 {
     t_asm       bler;
+
     if (argc == 1 || argc > 2)
         error_printf(&bler, "Error\n", NULL);
+    check_extension(argv[1]);
     check_file(&bler, argv[1]);
     parser(&bler);
 }

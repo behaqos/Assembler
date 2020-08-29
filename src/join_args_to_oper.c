@@ -44,6 +44,16 @@ int         set_args_size(t_operation *oper, int type)
 		error_printf(NULL, ERROR_TYPE_SIZE, NULL);
 }
 
+t_argument               	*init_new_arg_list(t_argument *new_arg, t_operation *oper, int type, int detector)
+{
+	if (!(new_arg = (t_argument *)ft_memalloc(sizeof(t_argument))))
+		error_printf(NULL, ERROR_ALLOCATE, NULL);
+	new_arg->type = type;
+	join_arg_to_oper(oper, new_arg);
+	new_arg->detector = detector;
+	return (new_arg);
+}
+
 /*
  * Выделяем место для арумента в операции, обнуляем все значения.
  * Далее добалвяем новый аргумент в операцию.
@@ -54,18 +64,11 @@ int         set_args_size(t_operation *oper, int type)
  * type указывает на тип аргумента - T_REG, T_DIR, T_IND.
  */
 
-
-//TODO разбить функцию, плавлено
-
 void                join_argument(t_operation *oper, void *arg, int type, int detector)
 {
 	t_argument     *new_arg;
 
-	if (!(new_arg = (t_argument *)ft_memalloc(sizeof(t_argument))))
-		error_printf(NULL, ERROR_ALLOCATE, NULL);
-	new_arg->type = type;
-	join_arg_to_oper(oper, new_arg);
-	new_arg->detector = detector;
+	new_arg = init_new_arg_list(new_arg, oper, type, detector);
 	if (detector == STRING_VAL)
 	{
 		new_arg->str_val = (char *)arg;
@@ -74,8 +77,7 @@ void                join_argument(t_operation *oper, void *arg, int type, int de
 	else if (detector == NUM_VAL)
 	{
 		new_arg->num_val = ((int *)arg)[0]; // неправильно записывается.
-		free(arg); // FIXME почему не очищается arg?
+		free(arg); // FIXME При очистке есть потенциальная утечка.
 	}
-	new_arg->type = type;
 	new_arg->args_size = set_args_size(oper, type);
 }

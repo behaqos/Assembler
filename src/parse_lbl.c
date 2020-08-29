@@ -38,7 +38,7 @@ void            add_lbl_list(t_asm *bler, char *str)
     if (!(new = (t_lbls *)ft_memalloc(sizeof(t_lbls))))
         return ;
     new->str = ft_strdup(str);
-    new->strlen = ft_strlen(str); // TODO если нигде не используется, то удаляем.
+    new->strlen = ft_strlen(str);
     if (bler->oper->lbl == NULL)
         bler->oper->lbl = new;
     else

@@ -1,5 +1,16 @@
 #include "asm.h"
 
+unsigned            *parse_t_reg(char *arg, int *detector)
+{
+	unsigned        *value_num;
+
+	if (!(value_num = (unsigned *)ft_memalloc(sizeof(unsigned))))
+		return (NULL);
+	*value_num = ft_atoi(arg + 1);
+	*detector = NUM_VAL;
+	return ((void *)value_num);
+}
+
 /*
  * в этой функции в зависимости от типа аргумента парсим данные.
  * Если это T_REG, то парсим цифру от r переменной.
@@ -8,20 +19,21 @@
  * TODO разбей эту функцию
  */
 
-void                *parse_data(char *arg, int type, int *detector)
+void                *parse_data(char *arg, int arg_type, int *detector)
 {
 	unsigned        *value_num;
 	int             i;
 	char            *str;
 
 	i = 0;
-	if (type == T_REG)
+	if (arg_type == T_REG)
 	{
-		*detector = NUM_VAL;
-		if (!(value_num = (unsigned *)ft_memalloc(sizeof(unsigned))))
-			return (NULL);
-		*value_num = ft_atoi(arg + 1);
-		return ((void *)value_num);
+		value_num = parse_t_reg(arg, &*detector);
+//		if (!(value_num = (unsigned *)ft_memalloc(sizeof(unsigned))))
+//			return (NULL);
+//		*value_num = ft_atoi(arg + 1);
+//		*detector = NUM_VAL;
+//		return ((void *)value_num);
 	}
 	else
 	{
@@ -30,17 +42,17 @@ void                *parse_data(char *arg, int type, int *detector)
 		if (arg[i] == ':')
 		{
 			i += 2;
-			*detector = STRING_VAL;
 			if (!(str = ft_strsub(arg + i, 0, ft_strlen(arg) - 1)))
-				return (NULL);
+				error_printf(NULL, ERROR_ALLOCATE, NULL);
+			*detector = STRING_VAL;
 			return ((void *) str);
 		}
 		else
 		{
-			*detector = NUM_VAL;
 			if (!(value_num = (unsigned *)ft_memalloc(sizeof(unsigned))))
 				return (NULL);
 			*value_num = (unsigned)ft_atoi(arg + i); // FIXME записывается NULL и обнуляет переменную. А должен записать ноль.
+			*detector = NUM_VAL;
 			return ((void *)value_num);
 		}
 	}
@@ -141,11 +153,9 @@ int                 check_t_ind(char *str)
 
 int                 search_types(char *str)
 {
-	int             i;
 	int             arg_num;
 
 	arg_num = 0;
-	i = 0;
 	if (*str == 'r')
 	{
 		str++;
@@ -176,7 +186,9 @@ void                set_args(t_asm *bler, t_operation *oper, char **args)
 	int             type;
 	void            *arg;
 
+
 	i = 0;
+	check_commas(bler, oper, args);
 	while (args[i] != NULL)
 	{
 		detector = 0;
@@ -186,7 +198,6 @@ void                set_args(t_asm *bler, t_operation *oper, char **args)
 		join_argument(oper, arg, type, detector);
 		i++;
 	}
-	check_commas(bler, oper, args);
 	check_arg_count_type(bler, oper);
 	print_operation(bler, oper);
 }

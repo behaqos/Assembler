@@ -18,7 +18,7 @@
 # define ERROR_WRONG_COUNT_ARGS "ERROR: Operation have wrong count of arguments.\n"
 # define ERROR_TYPE_OF_OPER "ERROR: Operation have wrong type in arguments.\n"
 # define ERROR_LBL_NAME "ERROR: This string have wrong label name:\n"
-
+# define ERROR_FILE_EXTENSION "ERROR: File have not valid extension or this file not exist.\nPlease, check it.\n"
 # define MAX_UINT 4294967295
 # define NEARLY_MAX_UINT 429496729
 # define SIZE_T_IND 2

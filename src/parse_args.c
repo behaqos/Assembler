@@ -1,6 +1,5 @@
 #include "asm.h"
 
-//TODO продебажить правильность функци.
 /*
  * This function cleaning strings of arguments of tabs and spaces.
  */
@@ -24,7 +23,6 @@ char           		*clean_voids(char *str)
 	y = y - x + 1;
 	if (!(res = ft_strsub(str, x, y)))
 	    error_printf(NULL, ERROR_ALLOCATE, NULL);
-	//FIXME очисти str;
 	free(str);
 	return (res);
 }

@@ -31,4 +31,5 @@ void                print_operation(t_asm *bler, t_operation *opera)
 		i++;
 		printf("\n");
 	}
+	printf("\n--------------------------------------\n");
 }
