@@ -1,23 +1,25 @@
 .name "Tester"
 .comment "Test comment"
 
-#oreo:
-#    or      2,%3,r4
+    live    %1
+    ld      %2,r3
+    st      r4,5
+    add     r6,r7,r8
+    sub     r9,r10,r11
+    and     12,13,r14
+oreo:
+    or      15,%16,r16
+jumping: zjmp    %17
+    ldi     %:jumping,%16,r16
+    sti     r16,18,r16
+    fork    %19
+    lld     %20,r16
+    lldi    %21,%22,r16
+    lfork   %23
+    aff     r16
 
-#jumping: zjmp    %5
-    ldi     %:jumping,r5,r5
-    sti     r5,%4,r5
-    fork    %5
-    lld     %5,5
-    lldi    %5,%5,r5
-    lfork   %5
-    aff     r5
-    #    live    %5
-    #    ld      %5,r2
-    #    st      r3,5
-    #    add     r1,r6,r7
-    #    sub     r1,r6,r7
-    #    and     5,5,r7
-   # core:
-     # xorrrrr:
-       #   xor     55,%5,r5
+core:
+xorrrrr:
+    xor     24,%25,r16
+
+    //FIXME не показывает метки. Метки должен присваивать операции, которая идёт следующей или после двоеточия.
