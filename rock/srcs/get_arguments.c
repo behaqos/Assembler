@@ -137,6 +137,8 @@ void            print_operation(t_command *opera) {
 
 	args = oper->args;
 	printf("Operation name: %s\n\n", oper->name);
+	if (oper->labels)
+		printf("Label name: %s\n", (char *)oper->labels->content);
 	while (args) {
 		printf("ARG #%d ", i);
 		if (args->flag == -1)
@@ -167,7 +169,7 @@ void			get_arguments(t_asm *asmb, t_command *new, int *j)
 	array_map(arr, ft_strtrim);
 	// добавляет все аргументы в операцию.
 	foreach_arg(arr, new);
-	//print_operation(new);
+	print_operation(new);
 	// TODO проверка правильно расставленных запятых.
 	skip_args(asmb->line, arr, j);
 	// TODO очистика всего массива

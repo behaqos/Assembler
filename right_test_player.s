@@ -1,15 +1,22 @@
 .name "Tester"
 .comment "Test comment"
 
+test:
     live    %1
-    ld      %2,r3
+test2:    ld      %2,r3
+test3:
+
+
+
+
     st      r4,5
     add     r6,r7,r8
     sub     r9,r10,r11
     and     12,13,r14
-oreo:
+test4:
     or      15,%16,r16
-jumping: zjmp    %17
+test5:
+   zjmp    %17
     ldi     %:jumping,%16,r16
     sti     r16,18,r16
     fork    %19
