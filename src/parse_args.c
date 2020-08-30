@@ -34,7 +34,7 @@ char           		*clean_voids(char *str)
  * Так мы передвинемся к необходимой позиции после первого аргумента.
  * Если есть второй аргумент, то находим позицию
  */
-
+// TODO сократи эту функцию
 void                check_commas(t_asm *bler, t_operation *oper, char **args)
 {
 	int             i;
@@ -62,6 +62,7 @@ void                check_commas(t_asm *bler, t_operation *oper, char **args)
 		}
 		i++;
 	}
+	bler->sym = sym;
 }
 
 void                free_split(char **args)

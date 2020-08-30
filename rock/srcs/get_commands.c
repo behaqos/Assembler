@@ -99,6 +99,7 @@ static	void		get_lca(t_asm *asmb)
 			get_arguments(asmb, new, &j);
 		}
 	}
+	// Если есть строка, то отправляем на чек строку и сколько символов мы прошли.
 	if (asmb->line)
 		(!check_line(asmb->line + j)) ? ft_error(ERR_STRING) : 0;
 }

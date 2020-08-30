@@ -19,6 +19,8 @@
 # define ERROR_TYPE_OF_OPER "ERROR: Operation have wrong type in arguments.\n"
 # define ERROR_LBL_NAME "ERROR: This string have wrong label name:\n"
 # define ERROR_FILE_EXTENSION "ERROR: File have not valid extension or this file not exist.\nPlease, check it.\n"
+# define ERROR_CONTANT "ERROR: File have not valid data.\nPlease check it.\n"
+
 # define MAX_UINT 4294967295
 # define NEARLY_MAX_UINT 429496729
 # define SIZE_T_IND 2
@@ -82,12 +84,12 @@ static t_op_list  g_op_tab[16] = {
 };
 
 
-typedef enum {
+enum {
 	NUM_VAL = 1,
 	STRING_VAL = 2
 };
 
-typedef enum types
+enum types
 {
     LABEL = 1,
     COMMAND
@@ -102,9 +104,9 @@ typedef enum types
 
 typedef  struct     s_arg
 {
-    char            *str_val;
+	int             detector;
+	char            *str_val;
     int             num_val;
-    int             detector;
     int             args_size;
     int             type;
     struct s_arg    *next;
@@ -138,11 +140,11 @@ typedef  struct     s_asm
     char            *name;
     char            *comment;
     char            *line;
-    char            *free_line; //TODO эта переменная понадобится, если line до конца не очищается.
+	t_operation     *oper;
+	char            *free_line; //TODO эта переменная понадобится, если line до конца не очищается.
     int             sym;
     int             line_len;
     int             cor_fd;
-    t_operation     *oper;
 }                   t_asm;
 
 /*
@@ -150,7 +152,7 @@ typedef  struct     s_asm
  */
 void                parser(t_asm *bler);
 void                parse_name_comm(t_asm *bler);\
-void                parse_operations(t_asm *bler);
+void                parse_instructions(t_asm *bler);
 t_operation         *init_op_list(t_asm *bler);
 void                parse_args(t_asm *bler, t_operation *oper);
 

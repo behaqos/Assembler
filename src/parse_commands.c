@@ -53,6 +53,7 @@ t_operation     *init_op_list(t_asm *bler)
 void            parse_lbl_op(t_asm *bler)
 {
     t_operation *oper;
+    char        *str;
 
     if (check_label(bler) || check_op(bler))
     {
@@ -60,12 +61,16 @@ void            parse_lbl_op(t_asm *bler)
         add_lbls(bler, oper);
         add_op(bler, oper);
     }
-    //TODO надо сделать проверку ниже, чтобы выкинуть ошибку при неправильном лейбле (имени или отсутствия двоеточия)
-    //TODO 	if (asmb->line)
-	//TODO		(!check_line(asmb->line + j)) ? ft_error(ERR_STRING) : 0;
+    if (bler->line != NULL)
+    {
+    	pass_voids(bler);
+	    str = bler->line + bler->sym;
+    	if (*str != '\0')
+		    error_printf(bler, ERROR_CONTANT, NULL);
+    }
 }
-
-void            parse_operations(t_asm *bler)
+//FIXME если мусор после имени с комментом и перед меткой, то пропускает. Исправь.
+void            parse_instructions(t_asm *bler)
 {
     while (get_next_line(bler->fd, &bler->line) > 0)
     {
@@ -74,7 +79,8 @@ void            parse_operations(t_asm *bler)
 		parse_lbl_op(bler);
 		bler->sym = 0;
     }
-	//TODO лишний символ : записывает в название метки, когда парсит аргументы операции.
-    // TODO check_last_line(bler) <----------------- Обрати внимание, может поэтому.
+    if (bler->line != NULL)
+	    exit(1);
+    // TODO check_last_line(bler) <----------------- Напиши функцию, чтобы вывести ошибку, если после операции и аргументов что-то лишнее в строке.
     // TODO что делать, если названия двух меток одинаковы?
 }
