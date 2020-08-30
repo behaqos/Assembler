@@ -33,4 +33,5 @@ int             main(int argc, char **argv)
     check_extension(argv[1]);
     check_file(&bler, argv[1]);
     parser(&bler);
+    exit(0);
 }

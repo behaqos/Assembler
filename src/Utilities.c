@@ -8,7 +8,7 @@ void                print_operation(t_asm *bler, t_operation *opera)
 
 	oper = opera;
 	args = opera->args;
-	//printf("\nString: %s\n\n", bler->line);
+	printf("\nString: %s\n\n", bler->line);
 	printf("Operation name: %s\n", opera->name);
 	if (oper->lbl)
 		printf("Label name: %s\n", oper->lbl->str);

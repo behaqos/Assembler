@@ -2,9 +2,10 @@
 .comment "Test comment"
 
 test:
-    live    %1
+   live    %1
 test2:    ld      %2,r3
 test3:
+test4:
 
 
 
@@ -15,8 +16,8 @@ test3:
     and     12,13,r14
 test4:
     or      15,%16,r16
-test5:
-   zjmp    %17
+
+test5:   zjmp    %17
     ldi     %:test4,%16,r16
     sti     r16,18,r16
     fork    %19
