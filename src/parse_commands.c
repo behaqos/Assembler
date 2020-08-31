@@ -69,7 +69,10 @@ void            parse_lbl_op(t_asm *bler)
 		    error_printf(bler, ERROR_CONTANT, NULL);
     }
 }
+
 //FIXME если мусор после имени с комментом и перед меткой, то пропускает. Исправь.
+// TODO что делать, если названия двух меток одинаковы?
+
 void            parse_instructions(t_asm *bler)
 {
     while (get_next_line(bler->fd, &bler->line) > 0)
@@ -82,5 +85,4 @@ void            parse_instructions(t_asm *bler)
     if (bler->line != NULL)
 	    exit(1);
     // TODO check_last_line(bler) <----------------- Напиши функцию, чтобы вывести ошибку, если после операции и аргументов что-то лишнее в строке.
-    // TODO что делать, если названия двух меток одинаковы?
 }
