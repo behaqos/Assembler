@@ -12,6 +12,11 @@
 
 #include "asm.h"
 
+/*
+ * # define CODAGE(i) 		g_table[i - 1].codage
+ * codage - это 
+ */
+
 static	void		get_codage(t_command *command)
 {
 	t_arg			*arg;
@@ -108,6 +113,10 @@ unsigned int		compute_variables(t_command *command)
 {
 	t_command		*tmp;
 
+	/*
+	 * берётся операция и проходимся по каждой операции.
+	 * get_codage - это
+	*/
 	tmp = command;
 	while (command)
 	{
