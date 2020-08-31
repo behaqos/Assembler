@@ -20,7 +20,6 @@
 # define ERROR_LBL_NAME "ERROR: This string have wrong label name:\n"
 # define ERROR_FILE_EXTENSION "ERROR: File have not valid extension or this file not exist.\nPlease, check it.\n"
 # define ERROR_CONTANT "ERROR: File have not valid data.\nPlease check it.\n"
-
 # define MAX_UINT 4294967295
 # define NEARLY_MAX_UINT 429496729
 # define SIZE_T_IND 2
@@ -173,6 +172,7 @@ void                error_printf(t_asm *bler, char *text, char *line);
  */
 
 void                set_args(t_asm *bler, t_operation *oper, char **args);
+void                *parse_data(char *arg, int arg_type, int *detector);
 void                join_argument(t_operation *oper, void *arg, int type, int detector);
 void                check_commas(t_asm *bler, t_operation *oper, char **args);
 void                check_arg_count_type(t_asm *bler, t_operation *oper);

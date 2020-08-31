@@ -1,7 +1,5 @@
 #include "asm.h"
 
-
-
 /*
  * At first checking all symbols in string. If string have # or ;
  * and it's not end of line - this is comment string.
