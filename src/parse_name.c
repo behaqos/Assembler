@@ -94,7 +94,4 @@ void            parse_name_comm(t_asm *bler) {
 	}
 	if (flag != 4)
 		error_printf(bler, ERROR_NOT_FOUND_NM_CM, NULL);
-	printf("NAME: %s\n", bler->name);
-	printf("COMMENT: %s\n", bler->comment);
-	exit(13);
 }

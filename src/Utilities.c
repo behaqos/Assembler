@@ -27,6 +27,7 @@ void                print_operation(t_asm *bler, t_operation *opera)
 			printf("                Type:%s", "T_DIR");
 		else if (args->type == T_IND)
 			printf("                Type:%s", "T_IND");
+		printf("\nARG SIZE: %d\n", args->args_size);
 		args = args->next;
 		i++;
 		printf("\n");

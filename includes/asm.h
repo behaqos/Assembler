@@ -127,7 +127,7 @@ typedef  struct         s_operation
 {
     char                *name;
     int                 op_code; // у него установлено char.
-    int                 byte;
+    int                 op_size;
     t_lbls              *lbl;
     t_argument          *args;
     struct s_operation  *next;
