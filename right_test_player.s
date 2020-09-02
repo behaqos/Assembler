@@ -1,4 +1,4 @@
-.name "Tester"
+.name ""
 .comment "Test comment"
 
 test:

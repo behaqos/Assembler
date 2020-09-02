@@ -20,6 +20,11 @@
 # define ERROR_LBL_NAME "ERROR: This string have wrong label name:\n"
 # define ERROR_FILE_EXTENSION "ERROR: File have not valid extension or this file not exist.\nPlease, check it.\n"
 # define ERROR_CONTANT "ERROR: File have not valid data.\nPlease check it.\n"
+# define ERROR_WOKS_NM_CM "ERROR: Name or comment have wrong with woks\n"
+# define ERROR_NAME_LEN "ERROR: Name's length is long\n"
+# define ERROR_COMM_LEN "ERROR: Comment's length is long\n"
+# define ERROR_NOT_FOUND_NM_CM "ERROR: Name or comment not fount\n"
+
 # define MAX_UINT 4294967295
 # define NEARLY_MAX_UINT 429496729
 # define SIZE_T_IND 2

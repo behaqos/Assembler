@@ -9,7 +9,7 @@ char           		*clean_voids(char *str)
 	int             y;
     char            *res;
 
-	if (str == NULL || *str == NULL)
+	if (!str|| !*str)
 		error_printf(NULL, "ERROR\n", NULL);
 	x = 0;
 	while (str[x] && (str[x] == ' ' ||
