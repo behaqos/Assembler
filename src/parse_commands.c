@@ -7,14 +7,22 @@
 void            pass_comments(char *str)
 {
     int         i;
+	int         len;
 
     i = 0;
+    len = ft_strlen(str);
     while (str[i] &&
 		    (str[i] != ';' &&
            str[i] != '#'))
         i++;
     if (str[i] != '\0')
-        ft_bzero(str, ft_strlen(str));
+    {
+	    while (i < len)
+	    {
+		    str[i] = '\0';
+		    i++;
+	    }
+    }
 }
 
 void            pass_voids(t_asm *bler)
