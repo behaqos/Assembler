@@ -1,10 +1,8 @@
 .name "test_player"
 .comment "Test comment"
 
+    st      r16,5
 test: #some
-
-
-
    live    %1
 test2:    ld      %2,r3
 test3:
@@ -13,7 +11,6 @@ test4:
 
 
 
-    st      r4,5
     add     r6,r7,r8
     sub     r9,r10,r11
     and     12,13,r14
@@ -30,5 +27,3 @@ test5:   zjmp    %17
     lfork   %23
     aff     r16
     xor     24,%25,r16
-
-test6:
