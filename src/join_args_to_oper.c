@@ -42,6 +42,7 @@ int         set_args_size(t_operation *oper, int type)
 		return (SIZE_T_REG);
 	else
 		error_printf(NULL, ERROR_TYPE_SIZE, NULL);
+	return (0);
 }
 
 t_argument               	*init_new_arg_list(t_argument *new_arg, t_operation *oper, int type, int detector)

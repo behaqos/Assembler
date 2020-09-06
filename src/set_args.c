@@ -121,6 +121,24 @@ int                 search_types(char *str)
  * А дальше фигачим в операцию всю инфу.
  */
 
+void				set_op_size(t_operation *opera)
+{
+	int len;
+	t_argument *args;
+
+	len = 1;
+	args = opera->args;
+	if (opera->code_type_arg)
+		len++;
+	while (args)
+	{
+		len += args->args_size;
+		args = args->next;
+	}
+	opera->op_size = len;
+}
+
+
 void                set_args(t_asm *bler, t_operation *oper, char **args)
 {
 	int             detector;
@@ -141,5 +159,6 @@ void                set_args(t_asm *bler, t_operation *oper, char **args)
 		i++;
 	}
 	check_arg_count_type(bler, oper);
+	set_op_size(oper); // подсчет размера операции FIXME Daler
 	print_operation(bler, oper);
 }

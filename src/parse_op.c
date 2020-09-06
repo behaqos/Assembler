@@ -92,6 +92,7 @@ void             parse_op(t_asm *bler, t_operation *oper)
 		error_printf(bler, ERROR_LINE, bler->line);
 	oper->name = ft_assm_strsub(bler->line, start, bler->sym - start);
 	oper->op_code = find_oper(oper->name, ft_strlen(oper->name));
+	oper->code_type_arg = g_op_tab[oper->op_code - 1].cod_t_args; // FIXME DALER Можно и убрать если в другом месте не используется
 }
 
 /*
