@@ -1,5 +1,13 @@
-.name ""
+.name "test_player"
 .comment "Test comment"
+
+
+
+
+
+
+
+
 
 test:
    live    %1

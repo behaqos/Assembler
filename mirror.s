@@ -1,7 +1,7 @@
 .name "mirror lifer"
 .comment "I will life. I can life."
 
-sti r1, %:l1, %1
+sti r-17, %:l1, %1
 
 l1:
 	live %1

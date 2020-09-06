@@ -20,11 +20,11 @@
 # define ERROR_LBL_NAME "ERROR: This string have wrong label name:\n"
 # define ERROR_FILE_EXTENSION "ERROR: File have not valid extension or this file not exist.\nPlease, check it.\n"
 # define ERROR_CONTANT "ERROR: File have not valid data.\nPlease check it.\n"
-# define ERROR_WOKS_NM_CM "ERROR: Name or comment have wrong with woks\n"
-# define ERROR_NAME_LEN "ERROR: Name's length is long\n"
-# define ERROR_COMM_LEN "ERROR: Comment's length is long\n"
-# define ERROR_NOT_FOUND_NM_CM "ERROR: Name or comment not fount\n"
-
+# define ERROR_WOKS_NM_CM "ERROR: Name or comment have wrong with woks.\n"
+# define ERROR_NAME_LEN "ERROR: Name's length is long.\n"
+# define ERROR_COMM_LEN "ERROR: Comment's length is long.\n"
+# define ERROR_NOT_FOUND_NM_CM "ERROR: Name or comment not fount.\n"
+# define ERROR_UNKNOWN_TEXT "ERROR: This line is unknown to program:\n"
 # define MAX_UINT 4294967295
 # define NEARLY_MAX_UINT 429496729
 # define SIZE_T_IND 2
@@ -47,18 +47,18 @@ typedef struct      s_array
  * Recording name of operation;
  * Recording count of agruments;
  * args keeping - keeping arguments which indicate to type of argmunet.
- * codage -
+ * cod_t_args -
  * lbl_size keeping size for translation to byte-code.
  */
 
 typedef struct      s_op_list
 {
 	char            *name;
-	char            args_num;
-	t_array         args[3];
 	char            op_code;
-	char            codage; //что это?
 	char            lbl_size;
+	unsigned        args_num;
+	t_array         args[3];
+	int        	    cod_t_args; //что это? это <<Код типов аргументов>>
 }                   t_op_list;
 
 /*
@@ -67,26 +67,30 @@ typedef struct      s_op_list
  * In args c
  */
 //# define CHECK_TYPE(op_code, num, type) g_op_tab[op_code].args[num].arg[(int)type]
+/*
+ * Как происходит поиск через константную переменную?
+ * Идёт обращение к коду операции - далее какой по счету этот аргумент? Обращается к номеру аргумента - если там 1, то отлично.
+ * Т.е. все нули это отсуствие аргументов, а все единицы возвращают TRUE, что значит - аргумент действительно должен быть.
+ */
 
 static t_op_list  g_op_tab[16] = {
-		{"live", 1, {{{0, 1, 0}}, {{0, 0, 0}}, {{0, 0, 0}}}, 1, 0, 4},
-		{"ld", 2, {{{0, 1, 1}}, {{1, 0, 0}}, {{0, 0, 0}}}, 2, 1, 4},
-		{"st", 2, {{{1, 0, 0}}, {{1, 0, 1}}, {{0, 0, 0}}}, 3, 1, 4},
-		{"add", 3, {{{1, 0, 0}}, {{1, 0, 0}}, {{1, 0, 0}}}, 4, 1, 4},
-		{"sub", 3, {{{1, 0, 0}}, {{1, 0, 0}}, {{1, 0, 0}}}, 5, 1, 4},
-		{"and", 3, {{{1, 1, 1}}, {{1, 1, 1}}, {{1, 0, 0}}}, 6, 1, 4},
-		{"or", 3, {{{1, 1, 1}}, {{1, 1, 1}}, {{1, 0, 0}}}, 7, 1, 4},
-		{"xor", 3, {{{1, 1, 1}}, {{1, 1, 1}}, {{1, 0, 0}}}, 8, 1, 4},
-		{"zjmp", 1, {{{0, 1, 0}}, {{0, 0, 0}}, {{0, 0, 0}}}, 9, 0, 2},
-		{"ldi", 3, {{{1, 1, 1}}, {{1, 1, 0}}, {{1, 0, 0}}}, 10, 1, 2},
-		{"sti", 3, {{{1, 0, 0}}, {{1, 1, 1}}, {{1, 1, 0}}}, 11, 1, 2},
-		{"fork", 1, {{{0, 1, 0}}, {{0, 0, 0}}, {{0, 0, 0}}}, 12, 0, 2},
-		{"lld", 2, {{{0, 1, 1}}, {{1, 0, 0}}, {{0, 0, 0}}}, 13, 1, 4},
-		{"lldi", 3, {{{1, 1, 1}}, {{1, 1, 0}}, {{1, 0, 0}}}, 14, 1, 2},
-		{"lfork", 1, {{{0, 1, 0}}, {{0, 0, 0}}, {{0, 0, 0}}}, 15, 1, 2},
-		{"aff", 1, {{{1, 0, 0}}, {{0, 0, 0}}, {{0, 0, 0}}}, 16, 1, 4}
+		{"live", 1, 4, 1, {{{FALSE, TRUE, FALSE}}, {{FALSE, FALSE, FALSE}}, {{FALSE, FALSE, FALSE}}}, 0},
+		{"ld", 2, 4,  2, {{{FALSE, TRUE, TRUE}}, {{TRUE, FALSE, FALSE}}, {{FALSE, FALSE, FALSE}}}, 1},
+		{"st", 3, 4, 2, {{{TRUE, FALSE, FALSE}}, {{TRUE, FALSE, TRUE}}, {{FALSE, FALSE, FALSE}}}, 1},
+		{"add", 4, 4, 3, {{{TRUE, FALSE, FALSE}}, {{TRUE, FALSE, FALSE}}, {{TRUE, FALSE, FALSE}}}, 1},
+		{"sub", 5, 4, 3, {{{TRUE, FALSE, FALSE}}, {{TRUE, FALSE, FALSE}}, {{TRUE, FALSE, FALSE}}}, 1},
+		{"and", 6, 4, 3, {{{TRUE, TRUE, TRUE}}, {{TRUE, TRUE, TRUE}}, {{TRUE, FALSE, FALSE}}}, 1},
+		{"or", 7, 4,3, {{{TRUE, TRUE, TRUE}}, {{TRUE, TRUE, TRUE}}, {{TRUE, FALSE, FALSE}}}, 1},
+		{"xor", 8, 4, 3, {{{TRUE, TRUE, TRUE}}, {{TRUE, TRUE, TRUE}}, {{TRUE, FALSE, FALSE}}}, 1},
+		{"zjmp", 9, 2, 1, {{{FALSE, TRUE, FALSE}}, {{FALSE, FALSE, FALSE}}, {{FALSE, FALSE, FALSE}}}, 0},
+		{"ldi", 10, 2, 3, {{{TRUE, TRUE, TRUE}}, {{TRUE, TRUE, FALSE}}, {{TRUE, FALSE, FALSE}}}, 1},
+		{"sti", 11, 2, 3, {{{TRUE, FALSE, FALSE}}, {{TRUE, TRUE, TRUE}}, {{TRUE, TRUE, FALSE}}}, 1},
+		{"fork", 12, 2, 1, {{{FALSE, TRUE, FALSE}}, {{FALSE, FALSE, FALSE}}, {{FALSE, FALSE, FALSE}}}, 0},
+		{"lld", 13, 4, 2, {{{FALSE, TRUE, TRUE}}, {{TRUE, FALSE, FALSE}}, {{FALSE, FALSE, FALSE}}}, 1},
+		{"lldi", 14, 2, 3, {{{TRUE, TRUE, TRUE}}, {{TRUE, TRUE, FALSE}}, {{TRUE, FALSE, FALSE}}}, 1},
+		{"lfork", 15, 2, 1, {{{FALSE, TRUE, FALSE}}, {{FALSE, FALSE, FALSE}}, {{FALSE, FALSE, FALSE}}}, 0},
+		{"aff", 16, 4, 1, {{{TRUE, FALSE, FALSE}}, {{FALSE, FALSE, FALSE}}, {{FALSE, FALSE, FALSE}}}, 1}
 };
-
 
 enum {
 	NUM_VAL = 1,
@@ -126,8 +130,9 @@ typedef struct          s_lbls
 typedef  struct         s_operation
 {
     char                *name;
+    int 				code_type_arg; // FIXME DALER
     int                 op_code; // у него установлено char.
-    int                 op_size;
+    int                 op_size; // FIXME DALER здесь храним размер операции
     t_lbls              *lbl;
     t_argument          *args;
     struct s_operation  *next;
@@ -136,6 +141,14 @@ typedef  struct         s_operation
 /*
  *
  */
+
+typedef struct          s_rec
+{
+	char                *final_code;
+	int 				cur;
+	int					file_size;
+	int 				file_fd;
+}                       t_rec;
 
 typedef  struct     s_asm
 {
@@ -147,8 +160,9 @@ typedef  struct     s_asm
 	t_operation     *oper;
 	char            *free_line; //TODO эта переменная понадобится, если line до конца не очищается.
     int             sym;
+    int 			exec_code_size; // TODO DALER ОБЩИЙ РАЗМЕР КОДА
     int             line_len;
-    int             cor_fd;
+	t_rec			record;
 }                   t_asm;
 
 /*
