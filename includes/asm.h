@@ -25,6 +25,8 @@
 # define ERROR_COMM_LEN "ERROR: Comment's length is long.\n"
 # define ERROR_NOT_FOUND_NM_CM "ERROR: Name or comment not fount.\n"
 # define ERROR_UNKNOWN_TEXT "ERROR: This line is unknown to program:\n"
+# define ERROR_END_LINE "ERROR: wrong end of file. Please check content of file.\n"
+
 # define MAX_UINT 4294967295
 # define NEARLY_MAX_UINT 429496729
 # define SIZE_T_IND 2

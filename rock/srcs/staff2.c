@@ -24,7 +24,7 @@ char		check_last_line(t_asm *asmb)
 	int		i;
 
 	i = 0;
-	ft_bzero(s, asmb->last_line_size + 1);
+	ft_bzero(s, asmb->last_line_size + 1); // Обнуляет всю строку без очистки.
 	lseek(asmb->fd, -asmb->last_line_size, SEEK_CUR); // TODO Что здесь происходит?
 	read(asmb->fd, &s, asmb->last_line_size); // Читает fd-шник в s на прежний размер байтов
 	if (!str_has(s, LABEL) && !str_has(s, COMMAND)) // Если есть метка или операция, то возв-ет единицу.

@@ -95,8 +95,6 @@ int             check_lbl_dupl(t_asm *bler)
 
 void            add_lbls(t_asm *bler, t_operation *oper)
 {
-    char        *str;
-
     while (bler->line)
     {
         pass_comments(bler->line);
@@ -115,5 +113,7 @@ void            add_lbls(t_asm *bler, t_operation *oper)
         	bler->sym = 0;
         }
     }
+    if (!bler->line)
+    	error_printf(bler, ERROR_END_LINE, NULL);
 }
 
