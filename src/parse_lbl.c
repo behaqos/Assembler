@@ -22,9 +22,9 @@ int             check_label(t_asm *bler)
         i++;
     }
     if (i > 0 && bler->line[i] == ':')
-        return (1);
+        return (TRUE);
     else
-	    return (0);
+	    return (FALSE);
 }
 
 /*
@@ -75,6 +75,17 @@ void            add_new_lbl(t_asm *bler, int *lbl_end, t_operation *oper)
     free(res);
 }
 
+int             check_lbl_dupl(t_asm *bler)
+{
+	/*
+	 * TODO Добавить проверку меток.
+	 * 1. Можно все метки сохранить в одном листе, а дальше проверять на дубликаты.
+	 * 2. Можно проходить в цикле по листам каждой операции и по листам каждой метки для проверки.
+	 *
+	 */
+	return (0);
+}
+
 /*
  * Here we are missing all comments and voids like tabs and spaces.
  * Aftre it checking label. If label exist - we are adding this label
@@ -96,6 +107,8 @@ void            add_lbls(t_asm *bler, t_operation *oper)
         if (bler->line[bler->sym] != '\0')
             return ;
         free(bler->line); // применил вместо ft_strdel
+        if (check_lbl_dupl(bler))
+        	error_printf(bler, "ERROR: File have duplicate labels", bler->line);
         if (get_next_line(bler->fd, &bler->line) > 0 && bler->line)
         {
         	bler->line_len = ft_strlen(bler->line);
