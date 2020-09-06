@@ -1,7 +1,7 @@
 .name "test_player"
 .comment "Test comment"
 
-    st      r16,5
+    st      r0,5
 test: #some
    live    %1
 test2:    ld      %2,r3

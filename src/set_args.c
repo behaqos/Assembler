@@ -105,7 +105,7 @@ int                 search_types(char *str)
 		if (*str == '-' || *str == '+')
 				return (WRONG_TYPE);
 		arg_num = ft_atoi(str);
-		if (arg_num <= REG_NUMBER && arg_num >= 0)
+		if (arg_num <= REG_NUMBER && arg_num > 0)
 			return (T_REG);
 		else
 			return (WRONG_TYPE);
