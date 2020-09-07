@@ -12,6 +12,8 @@ void                print_operation(t_asm *bler, t_operation *opera)
 	printf("Operation name: %s\n", opera->name);
 	printf("Operation size: %d byte.\n", opera->op_size);
 	printf("Code type size: %d byte.\n", opera->code_type_arg);
+	printf("OPCODE: %.2x.\n", opera->op_code);
+	printf("addr: %d\n", opera->addr);
 	if (oper->lbl)
 		printf("Label name: %s\n", oper->lbl->str);
 	else

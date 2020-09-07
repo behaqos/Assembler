@@ -116,7 +116,7 @@ typedef  struct     s_arg
 {
 	int             detector;
 	char            *str_val;
-    int             num_val;
+    long long       num_val;
     int             args_size;
     int             type;
     struct s_arg    *next;
@@ -132,6 +132,7 @@ typedef struct          s_lbls
 typedef  struct         s_operation
 {
     char                *name;
+    int 				addr;
     int 				code_type_arg; // FIXME DALER
     int                 op_code; // у него установлено char.
     int                 op_size; // FIXME DALER здесь храним размер операции
