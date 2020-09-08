@@ -26,7 +26,7 @@ int             find_oper(char *str, int len)
     int         i;
 
     i = 0;
-    while (i <= 16)
+    while (i < 16)
     {
         if (ft_strnequ(g_op_tab[i].name, str, len))
             return (g_op_tab[i].op_code);
