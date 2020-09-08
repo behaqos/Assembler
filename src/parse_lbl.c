@@ -113,8 +113,7 @@ void            add_lbls(t_asm *bler, t_operation *oper)
         	bler->line_len = ft_strlen(bler->line);
         	bler->sym = 0;
         }
+        //FIXME сделать проверку на \n. Проблема в GNL, потому что в GNL всегда в конце строки ставит '\0'. А нам необходимо сделать так, чтобы если после метки есть новая линия, то это исправно. А если этой линии нет,то выводи ошибку.
     }
-    if (!bler->line)
-    	error_printf(bler, ERROR_END_LINE, NULL);
 }
 

@@ -71,11 +71,11 @@ void		bytecode_conversion(t_rec *rec,int data ,int size)
 	}
 }
 
-char 	create_code_type_arg(t_operation *oper)
+char			create_code_type_arg(t_operation *oper)
 {
-	char	res;
-	int		i;
-	t_argument *args;
+	char		res;
+	int			i;
+	t_argument	*args;
 
 	i = 0;
 	res = 0;
@@ -135,16 +135,19 @@ void 	test(t_asm *bler)
 	while (oper)
 	{
 		args = oper->args;
-		bytecode_conversion(rec, oper->op_code, 1);
-		if (oper->code_type_arg)
-			bytecode_conversion(rec, create_code_type_arg(oper), oper->code_type_arg);
-		while(args)
+		if (oper->name != NULL)
 		{
-			if (args->type == T_REG || args->type == T_IND)
-				bytecode_conversion(rec, (int)args->num_val, args->args_size);
-			else if (args->type == T_DIR)
-				bytecode_conversion(rec, get_t_dir_val(args, bler, oper), args->args_size);
-			args = args->next;
+			bytecode_conversion(rec, oper->op_code, 1);
+			if (oper->code_type_arg)
+				bytecode_conversion(rec, create_code_type_arg(oper), oper->code_type_arg);
+			while(args)
+			{
+				if (args->type == T_REG || args->type == T_IND)
+					bytecode_conversion(rec, (int)args->num_val, args->args_size);
+				else if (args->type == T_DIR)
+					bytecode_conversion(rec, get_t_dir_val(args, bler, oper), args->args_size);
+				args = args->next;
+			}
 		}
 		oper = oper->next;
 	}

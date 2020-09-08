@@ -90,6 +90,7 @@ void             parse_op(t_asm *bler, t_operation *oper)
 	if (GNLINE != ' ' && GNLINE != '\t' &&
 		GNLINE != '%' && GNLINE != '-')
 		error_printf(bler, ERROR_LINE, bler->line);
+	//FIXME здесь записывается под первую метку, а должен записывать в последнюю метку, после которой идёт операция.
 	oper->name = ft_assm_strsub(bler->line, start, bler->sym - start);
 	oper->op_code = find_oper(oper->name, ft_strlen(oper->name));
 	oper->code_type_arg = g_op_tab[oper->op_code - 1].cod_t_args; // FIXME DALER Можно и убрать если в другом месте не используется
@@ -103,7 +104,9 @@ void             parse_op(t_asm *bler, t_operation *oper)
 
 void             add_op(t_asm *bler, t_operation *oper)
 {
-    if (check_op(bler))
+	while (oper->next != NULL)
+		oper = oper->next;
+    if (bler->line && check_op(bler))
     {
         parse_op(bler, oper);
         parse_args(bler, oper);

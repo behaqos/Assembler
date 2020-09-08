@@ -165,6 +165,7 @@ typedef  struct     s_asm
     int 			exec_code_size; // TODO DALER ОБЩИЙ РАЗМЕР КОДА
     int             line_len;
 	t_rec			record;
+	t_operation 	*head_oper;
 }                   t_asm;
 
 /*

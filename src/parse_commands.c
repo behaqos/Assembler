@@ -42,7 +42,10 @@ t_operation     *init_op_list(t_asm *bler)
     if (!(new_op = (t_operation *)ft_memalloc(sizeof(t_operation))))
         error_printf(bler, "Error: Program did not allocate memory\n", NULL);
     if (!bler->oper)
-        bler->oper = new_op;
+	{
+    	bler->oper = new_op;
+    	bler->head_oper = new_op;
+	}
     else
         tmp->next = new_op;
     return (new_op);
@@ -67,6 +70,7 @@ void            parse_lbl_op(t_asm *bler)
     {
         oper = init_op_list(bler);
         add_lbls(bler, oper);
+        //FIXME почему операции, которые только с lable не сохраняются в списке операций?
         add_op(bler, oper);
     }
     if (bler->line != NULL)
