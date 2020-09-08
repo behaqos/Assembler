@@ -31,12 +31,12 @@ int         skip_delimiters(char *str, int i)
  * Функция которая переписывает с line в name или comment
  */
 
-void record(t_asm *bler, int code, int *c, int i)
+void record(t_asm *bler, int code, int *c, char s)
 {
 	if (code < 2)
-		bler->name[*c] = bler->line[i];
+		bler->name[*c] = s;
 	else
-		bler->comment[*c] = bler->line[i];
+		bler->comment[*c] = s;
 	*c = *c + 1;
 	if (code < 2 && *c > PROG_NAME_LENGTH)
 		error_printf(bler, ERROR_NAME_LEN, bler->line);
@@ -65,7 +65,7 @@ int                     write_name(t_asm *bler, int *c ,int *code, int i)
 				*code = *code + 1;
 			}
 			else
-				record(bler, *code, c, i);
+				record(bler, *code, c, bler->line[i]);
 		}
 		if (bler->line[i] == '\"' && *code % 2 == 0 && *c == 0)
 			*code = *code + 1;
@@ -87,6 +87,8 @@ void            parse_name_comm(t_asm *bler)
 	while (get_next_line(bler->fd, &bler->line) > 0 && flag < 4) {
 		if (flag == 0 || flag == 2)
 			len = 0;
+		else if (flag == 1 || flag == 3)
+			record(bler, flag, &len, '\n');
 		if (flag == 0 && !ft_strncmp(".name", bler->line, 5))
 			len = write_name(bler, &len, &flag, 5);
 		else if (flag == 2 && !ft_strncmp(".comment", bler->line, 8))
@@ -98,6 +100,6 @@ void            parse_name_comm(t_asm *bler)
 		error_printf(bler, ERROR_NOT_FOUND_NM_CM, NULL);
 	pass_voids(bler);
 	if ((check_label(bler) == FALSE || check_op(bler) == FALSE) &&
-			ft_isalnum(bler->line[bler->sym]))
+	    ft_isalnum(bler->line[bler->sym]))
 		error_printf(bler, ERROR_UNKNOWN_TEXT, bler->line);
 }
