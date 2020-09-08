@@ -45,12 +45,7 @@ void            add_lbl_list(t_asm *bler, t_operation *oper, char *str)
         return ;
 	new_lbl->str = ft_strdup(str);
 	new_lbl->strlen = ft_strlen(str);
-	while (tmp && tmp->next)
-		tmp = tmp->next;
-    if (oper->lbl == NULL)
-        oper->lbl = new_lbl;
-    else
-        tmp->next = new_lbl;
+    oper->lbl = new_lbl;
 }
 
 /*
@@ -95,12 +90,18 @@ int             check_lbl_dupl(t_asm *bler)
 
 void            add_lbls(t_asm *bler, t_operation *oper)
 {
+	t_operation *new_oper;
+
+	new_oper = oper;
     while (bler->line)
     {
         pass_comments(bler->line);
         pass_voids(bler);
         if (check_label(bler))
-            add_new_lbl(bler, &bler->sym, oper);
+        {
+        	new_oper->lbl ? new_oper = init_op_list(bler) : 0;
+	        add_new_lbl(bler, &bler->sym, new_oper);
+        }
         pass_voids(bler);
         if (bler->line[bler->sym] != '\0')
             return ;

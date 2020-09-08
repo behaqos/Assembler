@@ -126,7 +126,6 @@ typedef struct          s_lbls
 {
     char                *str;
     int                 strlen;
-    struct s_lbls       *next;
 }                       t_lbls;
 
 typedef  struct         s_operation
