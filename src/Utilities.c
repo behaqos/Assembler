@@ -22,7 +22,7 @@ void                print_operation(t_asm *bler, t_operation *opera)
 	{
 		printf("ARG #%d ", i);
 		if (args->detector == NUM_VAL)
-			printf("Value: %d\n", args->num_val);
+			printf("Value: %lld\n", args->num_val);
 		else if (args->detector == STRING_VAL)
 			printf("Value: %s\n", args->str_val);
 		if (args->type == T_REG)

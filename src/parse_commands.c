@@ -74,7 +74,7 @@ void            parse_lbl_op(t_asm *bler)
     	pass_voids(bler);
 	    str = bler->line + bler->sym;
     	if (*str != '\0')
-		    error_printf(bler, ERROR_CONTANT, NULL);
+		    error_printf(bler, ERROR_CONTANT, bler->line);
     }
 }
 
