@@ -115,18 +115,19 @@ void                check_arg_count_type(t_asm *bler, t_operation *oper)
 
 void                parse_args(t_asm *bler, t_operation *oper)
 {
-	char **args;
+	char **arguments;
 	int i;
 
 	i = 0;
-	args = ft_strsplit(bler->line + bler->sym, SEPARATOR_CHAR);
-	if (!(args))
+	arguments = ft_strsplit(bler->line + bler->sym, SEPARATOR_CHAR);
+	if (!(arguments))
 		error_printf(bler, ERROR_ARGS, bler->line);
-	while (args[i])
+	while (arguments[i] != NULL)
 	{
-		args[i] = clean_voids(args[i]);
+		arguments[i] = clean_voids(arguments[i]);
 		i++;
 	}
-	set_args(bler, oper, args);
-	free_split(args);
+	set_args(bler, oper, arguments);
+	free_split(arguments);
+	bler->line ? ft_strdel(&bler->line) : 0;
 }

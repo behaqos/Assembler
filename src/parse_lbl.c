@@ -105,7 +105,7 @@ void            add_lbls(t_asm *bler, t_operation *oper)
         pass_voids(bler);
         if (bler->line[bler->sym] != '\0')
             return ;
-        bler->line ? free(bler->line) : 0; // применил вместо ft_strdel
+        bler->line ? ft_strdel(&bler->line) : 0; // применил вместо ft_strdel
         if (check_lbl_dupl(bler))
         	error_printf(bler, "ERROR: File have duplicate labels", bler->line);
         if (get_next_line(bler->fd, &bler->line) > 0 && bler->line)
