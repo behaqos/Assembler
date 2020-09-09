@@ -1,5 +1,3 @@
-
-
 #ifndef ASSEMBLER_ASM_H
 #define ASSEMBLER_ASM_H
 
@@ -101,12 +99,6 @@ enum {
 	STRING_VAL = 2
 };
 
-enum types
-{
-    LABEL = 1,
-    COMMAND
-};
-
 /*
  * str_val и num_val запоминают сами значения исходя из типа.
  * Детектор указывает - это строка или цифра (STRING_VAL или NUM_VAL);
@@ -162,7 +154,6 @@ typedef  struct     s_asm
     char            *comment;
     char            *line;
 	t_operation     *oper;
-	char            *free_line; //TODO эта переменная понадобится, если line до конца не очищается.
     int             sym;
     int 			exec_code_size; // TODO DALER ОБЩИЙ РАЗМЕР КОДА
     int             line_len;
