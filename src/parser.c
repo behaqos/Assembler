@@ -3,8 +3,8 @@
 void        parser(t_asm *bler)
 {
     parse_name_comm(bler);
-	printf("NAME:    %s\n", bler->name);
-	printf("COMMENT:    %s\n", bler->comment);
+	ft_printf("NAME:    %s\n", bler->name);
+	ft_printf("COMMENT:    %s\n", bler->comment);
 	parse_instructions(bler);
 	//TODO plavleno, убрать две строки ниже в другую функцию.
 	if (!bler->oper)

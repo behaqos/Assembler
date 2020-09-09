@@ -3,53 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: opavliuk <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: bgian <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/28 11:13:20 by opavliuk          #+#    #+#             */
-/*   Updated: 2018/03/28 20:53:57 by opavliuk         ###   ########.fr       */
+/*   Created: 2019/09/23 16:43:56 by bgian             #+#    #+#             */
+/*   Updated: 2019/09/25 19:42:48 by bgian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static void		ft_lstdelete(t_list **alst)
+static t_list	*add_to_end(t_list *l, t_list *new)
 {
-	t_list *ping;
+	t_list	*start;
 
-	ping = *alst;
-	if (alst != NULL && *alst != NULL)
-	{
-		while (ping)
-		{
-			free(ping);
-			ping = ping->next;
-		}
-		*alst = NULL;
-	}
+	if (!l)
+		return (new);
+	start = l;
+	while (l->next)
+		l = l->next;
+	l->next = new;
+	return (start);
 }
 
 t_list			*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem))
 {
-	t_list *ping;
-	t_list *tmp;
+	t_list	*new;
 
-	if (lst && (*f))
+	new = 0;
+	while (lst)
 	{
-		if (!(ping = f(lst)))
-			return (NULL);
-		tmp = ping;
+		new = add_to_end(new, f(lst));
 		lst = lst->next;
-		while (lst)
-		{
-			if (!(ping->next = f(lst)))
-			{
-				ft_lstdelete(&tmp);
-				return (NULL);
-			}
-			ping = ping->next;
-			lst = lst->next;
-		}
-		return (tmp);
 	}
-	return (NULL);
+	return (new);
 }

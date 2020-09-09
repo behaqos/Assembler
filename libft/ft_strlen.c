@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: opavliuk <opavliuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bgian <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/21 13:12:58 by opavliuk          #+#    #+#             */
-/*   Updated: 2018/05/02 13:37:05 by opavliuk         ###   ########.fr       */
+/*   Created: 2019/09/21 18:35:03 by bgian             #+#    #+#             */
+/*   Updated: 2019/09/21 18:35:12 by bgian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 size_t	ft_strlen(const char *s)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
-	while (s[i] != '\0')
+	while (*s++)
 		i++;
 	return (i);
 }

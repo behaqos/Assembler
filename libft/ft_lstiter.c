@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstiter.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: opavliuk <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: bgian <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/28 10:56:29 by opavliuk          #+#    #+#             */
-/*   Updated: 2018/03/28 20:54:38 by opavliuk         ###   ########.fr       */
+/*   Created: 2019/09/23 16:24:58 by bgian             #+#    #+#             */
+/*   Updated: 2019/09/23 16:47:12 by bgian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,9 @@
 
 void	ft_lstiter(t_list *lst, void (*f)(t_list *elem))
 {
-	t_list *ping;
-
-	if (lst && (*f))
+	while (lst)
 	{
-		ping = lst;
-		while (ping)
-		{
-			f(ping);
-			ping = ping->next;
-		}
+		f(lst);
+		lst = lst->next;
 	}
 }

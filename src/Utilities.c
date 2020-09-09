@@ -8,35 +8,35 @@ void                print_operation(t_asm *bler, t_operation *opera)
 
 	oper = opera;
 	args = opera->args;
-	printf("\nString: %s\n\n", bler->line);
-	printf("Operation name: %s\n", opera->name);
-	printf("Operation size: %d byte.\n", opera->op_size);
-	printf("Code type size: %d byte.\n", opera->code_type_arg);
-	printf("OPCODE: %.2x.\n", opera->op_code);
-	printf("addr: %d\n", opera->addr);
+	ft_printf("\nString: %s\n\n", bler->line);
+	ft_printf("Operation name: %s\n", opera->name);
+	ft_printf("Operation size: %d byte.\n", opera->op_size);
+	ft_printf("Code type size: %d byte.\n", opera->code_type_arg);
+	ft_printf("OPCODE: %.2x.\n", opera->op_code);
+	ft_printf("addr: %d\n", opera->addr);
 	if (oper->lbl)
-		printf("Label name: %s\n", oper->lbl->str);
+		ft_printf("Label name: %s\n", oper->lbl->str);
 	else
-		printf("\n");
+		ft_printf("\n");
 	while (args)
 	{
-		printf("ARG #%d ", i);
+		ft_printf("ARG #%d ", i);
 		if (args->detector == NUM_VAL)
-			printf("Value: %lld\n", args->num_val);
+			ft_printf("Value: %lld\n", args->num_val);
 		else if (args->detector == STRING_VAL)
-			printf("Value: %s\n", args->str_val);
+			ft_printf("Value: %s\n", args->str_val);
 		if (args->type == T_REG)
-			printf("                Type:%s", "T_REG");
+			ft_printf("                Type:%s", "T_REG");
 		else if (args->type == T_DIR)
-			printf("                Type:%s", "T_DIR");
+			ft_printf("                Type:%s", "T_DIR");
 		else if (args->type == T_IND)
-			printf("                Type:%s", "T_IND");
-		printf("\nARG SIZE: %d byte\n", args->args_size);
+			ft_printf("                Type:%s", "T_IND");
+		ft_printf("\nARG SIZE: %d byte\n", args->args_size);
 		args = args->next;
 		i++;
-		printf("\n");
+		ft_printf("\n");
 	}
-	printf("\n--------------------------------------\n");
+	ft_printf("\n--------------------------------------\n");
 
 
 }

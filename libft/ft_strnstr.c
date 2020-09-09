@@ -3,53 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: opavliuk <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: bgian <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/22 13:50:36 by opavliuk          #+#    #+#             */
-/*   Updated: 2018/03/28 20:17:21 by opavliuk         ###   ########.fr       */
+/*   Created: 2019/09/21 16:29:00 by bgian             #+#    #+#             */
+/*   Updated: 2019/09/25 17:09:41 by bgian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static size_t	check(char *b, char *l, size_t i, size_t n)
+char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 {
-	while (b[i] == l[n])
-	{
-		if (b[i + 1] == '\0' && l[n + 1] == '\0')
-			return (0);
-		i++;
-		n++;
-	}
-	if (l[n] == '\0')
-		return (0);
-	else
-		return (1);
-}
+	char	*f_occ;
 
-char			*ft_strnstr(const char *big, const char *little, size_t len)
-{
-	size_t	i;
-	size_t	n;
-	char	*b;
-	char	*l;
-
-	i = 0;
-	b = (char *)big;
-	l = (char *)little;
-	if (l[i] == '\0')
-		return (b);
-	while (b[i] != '\0' && len && ft_strlen(l) <= len)
-	{
-		n = 0;
-		if (b[i] == l[n])
-		{
-			n = check(b, l, i, n);
-			if (!n)
-				return (b + i);
-		}
-		i++;
-		len--;
-	}
-	return (NULL);
+	f_occ = ft_strstr(haystack, needle);
+	return ((f_occ + ft_strlen(needle) > haystack + len || !f_occ) ? \
+			NULL : f_occ);
 }

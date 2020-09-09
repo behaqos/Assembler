@@ -3,17 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: opavliuk <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: bgian <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/22 19:06:02 by opavliuk          #+#    #+#             */
-/*   Updated: 2018/03/28 19:18:54 by opavliuk         ###   ########.fr       */
+/*   Created: 2019/09/21 17:12:06 by bgian             #+#    #+#             */
+/*   Updated: 2019/09/21 17:16:16 by bgian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int		ft_isdigit(int c)
+int	ft_isdigit(int c)
 {
-	if (c >= '0' && c <= '9')
-		return (1);
-	else
-		return (0);
+	return ((c <= '9' && c >= '0') ? 1 : 0);
 }

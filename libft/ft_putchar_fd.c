@@ -3,40 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: opavliuk <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: bgian <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/26 15:48:05 by opavliuk          #+#    #+#             */
-/*   Updated: 2018/04/26 13:30:53 by opavliuk         ###   ########.fr       */
+/*   Created: 2019/09/23 18:54:36 by bgian             #+#    #+#             */
+/*   Updated: 2019/09/23 18:55:25 by bgian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putchar_fd(int c, int fd)
+void	ft_putchar_fd(char c, int fd)
 {
-	unsigned char	code[4];
-
-	if (c <= 127)
-		write(fd, &c, 1);
-	else if (c <= 2047)
-	{
-		code[0] = 192 | ((c >> 6) & 31);
-		code[1] = 128 | (c & 63);
-		write(fd, code, 2);
-	}
-	else if (c <= 65535)
-	{
-		code[0] = 224 | ((c >> 12) & 15);
-		code[1] = 128 | ((c >> 6) & 63);
-		code[2] = 128 | (c & 63);
-		write(fd, code, 3);
-	}
-	else if (c <= 1114111)
-	{
-		code[0] = 240 | ((c >> 18) & 7);
-		code[1] = 128 | ((c >> 12) & 63);
-		code[2] = 128 | ((c >> 6) & 63);
-		code[3] = 128 | (c & 63);
-		write(fd, code, 4);
-	}
+	write(fd, &c, 1);
 }

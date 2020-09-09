@@ -3,79 +3,162 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: opavliuk <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: bgian <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/16 17:10:05 by opavliuk          #+#    #+#             */
-/*   Updated: 2018/07/13 08:38:17 by tkiselev         ###   ########.fr       */
+/*   Created: 2019/09/27 20:20:24 by bgian             #+#    #+#             */
+/*   Updated: 2019/10/11 18:37:49 by bgian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "get_next_line.h"
 #include "libft.h"
+#include <errno.h>
 
-static	char		*ft_realloc(char *ptr, int size)
+static t_unread_buff	*new_buf(void)
 {
-	int				i;
-	char			*new_ptr;
+	t_unread_buff	*buffer;
+
+	buffer = (t_unread_buff *)malloc(sizeof(t_unread_buff));
+	if (!buffer)
+		return (0);
+	buffer->data = (char *)malloc(BUFF_SIZE);
+	if (!buffer->data)
+	{
+		free(buffer);
+		return (0);
+	}
+	buffer->pos = 0;
+	buffer->nbytes = 0;
+	buffer->eof = 0;
+	buffer->io_err = 0;
+	buffer->nl_found = 0;
+	return (buffer);
+}
+
+static char				*concat_and_free(t_list **l, unsigned int total_len)
+{
+	char	*c;
+	size_t	i;
 
 	i = 0;
-	if (!(new_ptr = ft_strnew(size)))
-		return (0);
-	if (ptr)
+	c = 0;
+	if (total_len + 1)
+		c = (char *)malloc(total_len + 1);
+	if (!c)
 	{
-		while (ptr[i] != '\0')
+		errno = EOVERFLOW;
+		ft_lstdel(l, &del_simple);
+		return (0);
+	}
+	while (*l)
+	{
+		ft_memcpy(c + i, (const void *)(*l)->content, (*l)->content_size);
+		i += (*l)->content_size;
+		ft_lstdelone(l, &del_simple);
+	}
+	c[i] = 0;
+	return (c);
+}
+
+/*
+**		Append contents of buffer from pos to '\n' into list *l
+**		Return number of bytes (len) extracted from buffer. Skip newline.
+**		Update the current position of buffer to (len + 1) bytes
+**		Update nl_found field if found '\n'
+**
+**		position can become > bytes_in_buff
+*/
+
+static size_t			try_buffer(t_unread_buff *buff, t_list **l)
+{
+	int	len;
+
+	len = 0;
+	buff->nl_found = 0;
+	while (buff->pos + len < buff->nbytes)
+	{
+		if (buff->data[buff->pos + len] == '\n')
 		{
-			new_ptr[i] = ptr[i];
-			i++;
+			buff->nl_found = 1;
+			break ;
 		}
-		free(ptr);
+		len++;
 	}
-	return (new_ptr);
+	*l = ft_lstappend(*l, ft_memdup(buff->data + buff->pos, len), len);
+	buff->pos += len + 1;
+	return ((size_t)len);
 }
 
-static	int			ft_put_n(char *buffer, char **line, int *size)
-{
-	int				flag;
-	int				n;
+/*
+**		First of all, try to read from buffer.
+**		If nothing interesting left in buffer, read from file.
+**		If nothing interesting left in file, stop and update EOF-bit
+*/
 
-	n = 0;
-	flag = 0;
-	if (buffer[0] == '\0')
-		return (0);
-	while (buffer[n] != '\0' && buffer[n] != '\n')
-		n++;
-	(*size) += n;
-	*line = ft_realloc(*line, *size);
-	ft_memccpy(*line + ft_strlen(*line), buffer, '\n', n);
-	if (buffer[n] == '\n')
+static int				seek_nl(t_unread_buff *buff, int fd, t_list **l)
+{
+	size_t	total_len;
+	size_t	prev;
+
+	total_len = 0;
+	while (1)
 	{
-		flag = 1;
-		n++;
-		ft_memmove(buffer, buffer + n, ft_strlen(buffer) - n);
-		ft_bzero(buffer + ft_strlen(buffer) - n, n);
+		prev = total_len;
+		errno = (total_len += try_buffer(buff, l)) < prev ? EOVERFLOW : errno;
+		if (!buff->nl_found)
+		{
+			buff->nbytes = read(fd, buff->data, BUFF_SIZE);
+			buff->pos = 0;
+			if (buff->nbytes == -1)
+				return (0);
+			if (buff->nbytes == 0)
+			{
+				if (total_len == 0)
+					buff->eof = 1;
+				return (total_len);
+			}
+			continue;
+		}
+		return (total_len);
 	}
-	else
-		ft_bzero(buffer, n);
-	return (flag);
 }
 
-int					get_next_line(const int fd, char **line)
-{
-	int				bytes;
-	int				size;
-	static	char	buffer[BUFF_SIZE];
+/*
+**		Caller should not store anything useful in *line.
+**		EOF handling detatils:
+**		When we return 0, *line is set to NULL
+**		If EOF reached and there is still any data in buffer, reading is
+**		not considered as finished, 0 is not returned.
+**		If any data is appended to file after EOF, we can read it.
+**
+**		Other details:
+**		1)*line IS freed and set to NULL in case of ANY errors
+**		Absence of double free is guaranteed by function concat_and_free
+**		2)l is ALWAYS freed in concat_and_free.
+**		Absence of double free is guaranteed by function ft_lstdel
+*/
 
-	size = 0;
-	if (!line || (read(fd, buffer, 0)) == -1)
+int						get_next_line(const int fd, char **line)
+{
+	static t_bbtree_node	*tree;
+	t_unread_buff			**buff;
+	unsigned int			len;
+	t_list					*l;
+
+	errno = 0;
+	l = NULL;
+	if (!*(buff = (t_unread_buff **)add_index(&tree, fd, DEPTH)))
+		*buff = new_buf();
+	if (!*buff || !line)
 		return (-1);
-	*line = NULL;
-	if (ft_put_n(buffer, line, &size) == 1)
-		return (1);
-	while ((bytes = read(fd, buffer, BUFF_SIZE)) > 0)
+	(*buff)->eof = 0;
+	len = (unsigned int)seek_nl(*buff, fd, &l);
+	*line = concat_and_free(&l, len);
+	if (errno || (*buff)->eof == 1)
 	{
-		if (bytes != BUFF_SIZE)
-			ft_bzero(buffer + bytes, BUFF_SIZE - bytes);
-		if ((ft_put_n(buffer, line, &size)) == 1)
-			return (1);
+		free(*line);
+		*line = 0;
+		return (errno ? -1 : 0);
 	}
-	return (((*line) == NULL) ? 0 : 1);
+	return (1);
 }

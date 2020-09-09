@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_toupper.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: opavliuk <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: bgian <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/22 19:47:10 by opavliuk          #+#    #+#             */
-/*   Updated: 2018/03/28 19:19:31 by opavliuk         ###   ########.fr       */
+/*   Created: 2019/09/21 17:30:46 by bgian             #+#    #+#             */
+/*   Updated: 2019/09/21 17:33:08 by bgian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int		ft_toupper(int c)
+int	ft_toupper(int c)
 {
 	if (c >= 'a' && c <= 'z')
-		return (c - 32);
-	else
-		return (c);
+		return (c + 'A' - 'a');
+	return (c);
 }

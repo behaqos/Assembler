@@ -1,127 +1,45 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: opavliuk <opavliuk@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2018/03/26 16:04:15 by opavliuk          #+#    #+#              #
-#    Updated: 2018/07/14 15:32:13 by tkiselev         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+NAME = libftprintf.a
 
-COLOR_OFF=\033[0m#			# Text Reset
-BLACK	=\033[0;30m#		# Black
-RED		=\033[0;31m#		# Red
-GREEN	=\033[0;32m#		# Green
-YELLOW	=\033[0;33m#		# Yellow
-BLUE	=\033[0;34m#		# Blue
-PURPLE	=\033[0;35m#		# Purple
-CYAN	=\033[0;36m#		# Cyan
-WHITE	=\033[0;37m#		# White
+D_PR = ./ft_printf
 
-CC=gcc 
-CFLAGS=-Wall -Werror -Wextra
-SRC=./ft_memset.c \
-	./ft_atoi.c \
-	./ft_bzero.c \
-	./ft_count_words.c \
-	./ft_isalnum.c \
-	./ft_isalpha.c \
-	./ft_isascii.c \
-	./ft_isdigit.c \
-	./ft_isprint.c \
-	./ft_itoa.c \
-	./ft_lstadd.c \
-	./ft_lstdel.c \
-	./ft_lstdelone.c \
-	./ft_lstiter.c \
-	./ft_lstlen.c \
-	./ft_lstmap.c \
-	./ft_lstnew.c \
-	./ft_lstprint.c \
-	./ft_memalloc.c \
-	./ft_memccpy.c \
-	./ft_memchr.c \
-	./ft_memcmp.c \
-	./ft_memcpy.c \
-	./ft_memdel.c \
-	./ft_memmove.c \
-	./ft_memset.c \
-	./ft_putchar.c \
-	./ft_putchar_fd.c \
-	./ft_putendl.c \
-	./ft_putendl_fd.c \
-	./ft_putnbr.c \
-	./ft_putnbr_fd.c \
-	./ft_putstr.c \
-	./ft_putstr_fd.c \
-	./ft_sqrt.c \
-	./ft_stralldel.c \
-	./ft_strcat.c \
-	./ft_strchr.c \
-	./ft_strclr.c \
-	./ft_strcmp.c \
-	./ft_strcpy.c \
-	./ft_strdel.c \
-	./ft_strdup.c \
-	./ft_strequ.c \
-	./ft_striter.c \
-	./ft_striteri.c \
-	./ft_strjoin.c \
-	./ft_strlcat.c \
-	./ft_strlen.c \
-	./ft_strmap.c \
-	./ft_strmapi.c \
-	./ft_strncat.c \
-	./ft_strncmp.c \
-	./ft_strncpy.c \
-	./ft_strnequ.c \
-	./ft_strnew.c \
-	./ft_strnstr.c \
-	./ft_strrchr.c \
-	./ft_strsplit.c \
-	./ft_strstr.c \
-	./ft_strsub.c \
-	./ft_strtrim.c \
-	./ft_tolower.c \
-	./ft_toupper.c \
-	./get_next_line.c \
-	./check_percent.c \
-	./ft_printf.c \
-	./ft_putnbr_base.c \
-	./write_symbol_s_uni.c \
-	./write_to_buffer.c \
-	./write_type_c.c \
-	./write_type_s.c \
-	./write_type_d_i.c \
-	./write_type_x_p.c \
-	./write_type_o.c \
-	./write_type_u.c \
-	./write_colors.c \
-	./ft_strjoinfree.c \
-	./ft_list_pushback.c \
-	./ft_is_uint.c \
-	./print_memory.c
-OBJ=$(SRC:.c=.o)
-NAME=libft.a
-HEADER=libft.h
+D_FT = ./ftoa
+
+define SRC 
+ft_atoi.c	ft_lstdelone.c	ft_memmove.c	ft_strcat.c	ft_strjoin.c	ft_strnstr.c \
+ft_bzero.c	ft_lstiter.c	ft_memset.c	ft_strchr.c	ft_strlcat.c	ft_strrchr.c \
+ft_isalnum.c	ft_lstmap.c	ft_putchar.c	ft_strclr.c	ft_strlen.c	ft_strsplit.c \
+ft_isalpha.c	ft_lstnew.c	ft_putchar_fd.c	ft_strcmp.c	ft_strmap.c	ft_strstr.c \
+ft_isascii.c	ft_memalloc.c	ft_putendl.c	ft_strcpy.c	ft_strmapi.c	ft_strsub.c \
+ft_isdigit.c	ft_memccpy.c	ft_putendl_fd.c	ft_strdel.c	ft_strncat.c	ft_strtrim.c \
+ft_isprint.c	ft_memchr.c	ft_putnbr.c	ft_strdup.c	ft_strncmp.c	ft_tolower.c \
+ft_itoa.c	ft_memcmp.c	ft_putnbr_fd.c	ft_strequ.c	ft_strncpy.c	ft_toupper.c \
+ft_lstadd.c	ft_memcpy.c	ft_putstr.c	ft_striter.c	ft_strnequ.c \
+ft_lstdel.c	ft_memdel.c	ft_putstr_fd.c	ft_striteri.c	ft_strnew.c ft_memdup.c\
+ft_lstappend.c ft_del.c ft_swap.c ft_swapint.c ft_minval_int.c ft_maxval_int.c \
+ft_bsort_int.c ft_min_int.c ft_max_int.c ft_print_array.c ft_array_subtract.c \
+ft_bbtree_utils.c get_next_line.c ft_itoa_base.c ft_strrev.c $(D_PR)/apply_spec.c \
+$(D_PR)/apply_spec2.c $(D_PR)/apply_spec3.c $(D_PR)/apply_spec4.c $(D_PR)/apply_spec5.c $(D_PR)/apply_spec6.c \
+$(D_PR)/arg_extractors.c $(D_PR)/arg_extractors2.c $(D_PR)/conv_int.c $(D_PR)/conv_int2.c $(D_PR)/conv_other.c \
+$(D_PR)/conv_wrappers_int.c $(D_PR)/conv_wrappers_int2.c $(D_PR)/conv_wrappers_other.c $(D_PR)/find_action.c \
+$(D_PR)/printf.c $(D_PR)/read_spec.c $(D_PR)/read_spec2.c $(D_FT)/decimal_arithmetic.c $(D_FT)/decimal_arithmetic2.c \
+$(D_FT)/decimal_arithmetic3.c $(D_FT)/decimal_arithmetic4.c $(D_FT)/decimal_arithmetic5.c $(D_FT)/ftoa.c $(D_FT)/ftoa2.c 
+endef
+
+OBJ = $(SRC:.c=.o)
 
 all: $(NAME)
 
-$(NAME): $(OBJ) $(HEADER)
-	@ar rc $(NAME) $(OBJ)
-	@ printf "\n\n###	$(YELLOW) libft.a $(COLOR_OFF) is $(GREEN)READY!$(COLOR_OFF) 📚	###\n\n"
+$(NAME): $(OBJ)
+	ar rc $(NAME) $(OBJ)
+	ranlib $(NAME)
 
 %.o: %.c
-	@$(CC) $(CFLAGS) -o $@ -c $< -I ./
-	@printf "$(CYAN)*$(COLOR_OFF)"
+		gcc -Wall -Wextra -Werror -c $< -o $@ -I includes -I ft_printf -I ftoa 
 
 clean:
-	@rm -f $(OBJ)
+	rm -f $(OBJ)
 
 fclean: clean
-	@rm -f $(NAME)
-	@printf "$(RED)remove $(NAME)$(COLOR_OFF)\n"
+	rm -f $(NAME)
 
 re: fclean all

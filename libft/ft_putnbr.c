@@ -3,33 +3,65 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: opavliuk <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: bgian <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/26 15:28:30 by opavliuk          #+#    #+#             */
-/*   Updated: 2018/03/26 15:45:53 by opavliuk         ###   ########.fr       */
+/*   Created: 2019/09/23 18:50:52 by bgian             #+#    #+#             */
+/*   Updated: 2019/09/23 20:41:36 by bgian            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putnbr(int n)
+static void			str_rev(char *s)
 {
+	int		len;
+	int		i;
+	char	tmp;
+
+	i = 0;
+	len = ft_strlen(s);
+	while (i < (len - i - 1))
+	{
+		tmp = s[i];
+		s[i] = s[len - i - 1];
+		s[len - i - 1] = tmp;
+		i++;
+	}
+}
+
+static int			my_abs(int n)
+{
+	return (n > 0 ? n : -1 * n);
+}
+
+static void			ft_itoa_stack(int n, char *s)
+{
+	int		i;
+
+	i = 0;
 	if (n < 0)
 	{
-		ft_putchar('-');
-		if (n == -2147483648)
-		{
-			ft_putchar('2');
-			n = (n % 1000000000) * (-1);
-		}
-		else
-			n = n * (-1);
+		s[0] = '-';
+		i++;
 	}
-	if (n >= 10)
+	if (n == 0)
+		s[0] = '0';
+	while (n)
 	{
-		ft_putnbr(n / 10);
-		ft_putnbr(n % 10);
+		s[i++] = my_abs(n % 10) + '0';
+		n = n / 10;
 	}
-	else if (n < 10)
-		ft_putchar(n + 48);
+	str_rev((s[0] == '-') ? s + 1 : s);
+}
+
+void				ft_putnbr(int n)
+{
+	char	s[12];
+	int		i;
+
+	i = 0;
+	while (i < 12)
+		s[i++] = 0;
+	ft_itoa_stack(n, s);
+	ft_putstr(s);
 }
