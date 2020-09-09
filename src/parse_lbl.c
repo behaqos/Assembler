@@ -82,6 +82,12 @@ int             check_lbl_dupl(t_asm *bler)
 }
 
 /*
+ * Если есть строка, то очищаем её.
+ * Далее перемещаем fd дескриптор назад на кол-во символов (байтов).
+ * Считываем заново.
+ */
+
+/*
  * Here we are missing all comments and voids like tabs and spaces.
  * Aftre it checking label. If label exist - we are adding this label
  * like new list to operation list. And after it checking next line unitl
@@ -95,8 +101,6 @@ void            add_lbls(t_asm *bler, t_operation *oper)
 	new_oper = oper;
     while (bler->line)
     {
-    	int len = ft_strlen(bler->line);
-    	bler->line[len] = '\n';
         pass_comments(bler->line);
         pass_voids(bler);
         if (check_label(bler))

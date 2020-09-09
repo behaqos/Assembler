@@ -40,8 +40,6 @@ void                error_printf(t_asm *bler, char *text, char *line)
 {
     text ? ft_printf("%s\n", text) : 0;
     line ? ft_printf("%s\n", line) : 0;
-
 	clear_bler(bler);
     exit(0);
 }
-

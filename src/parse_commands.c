@@ -50,6 +50,14 @@ t_operation     *init_op_list(t_asm *bler)
     return (new_op);
 }
 
+void            check_end(t_asm *bler)
+{
+	bler->line ? ft_strdel(&bler->line) : 0;
+	lseek(bler->fd, -bler->line_len, SEEK_CUR);
+	read(bler->fd, &bler->line, bler->line_len);
+	//ft_printf("LSEEK: %s\n", bler->line);
+}
+
 /*
  * Сначала проверяем нашлись ли команда либо метка.
  * Если да, то сначала создаём переменную для хранения операций.
@@ -78,6 +86,7 @@ void            parse_lbl_op(t_asm *bler)
     	if (*str != '\0')
 		    error_printf(bler, ERROR_CONTANT, bler->line);
     }
+	//check_end(bler);
 }
 
 //FIXME если мусор после имени с комментом и перед меткой, то пропускает. Исправь.
