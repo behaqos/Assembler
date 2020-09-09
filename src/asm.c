@@ -168,6 +168,9 @@ void	recorder(t_asm *bler)
 	bytecode_conversion(rec, bler->exec_code_size, 4);
 	ft_memcpy(&rec->final_code[rec->cur], bler->comment, ft_strlen(bler->comment));
 	rec->cur += COMMENT_LENGTH + 4;
+	ft_putstr("Writing output program to ");
+	ft_putstr(bler->files_name);
+	ft_putstr(".cor file\n");
 	test(bler);
 	//write(bler->record.file_fd, rec->final_code, rec->file_size);
 	write(open("111111.cor", O_WRONLY | O_TRUNC | O_CREAT, 0644), rec->final_code, rec->file_size);
