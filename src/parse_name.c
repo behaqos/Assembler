@@ -84,7 +84,8 @@ void            parse_name_comm(t_asm *bler)
 	flag = 0;
 	bler->name = ft_strnew(PROG_NAME_LENGTH);
 	bler->comment = ft_strnew(COMMENT_LENGTH);
-	while (get_next_line(bler->fd, &bler->line) > 0 && flag < 4) {
+	while (flag < 4 && get_next_line(bler->fd, &bler->line) > 0)
+	{
 		if (flag == 0 || flag == 2)
 			len = 0;
 		else if (flag == 1 || flag == 3)
@@ -99,7 +100,6 @@ void            parse_name_comm(t_asm *bler)
 	if (flag != 4)
 		error_printf(bler, ERROR_NOT_FOUND_NM_CM, NULL);
 	pass_voids(bler);
-	if ((check_label(bler) == FALSE || check_op(bler) == FALSE) &&
-	    ft_isalnum(bler->line[bler->sym]))
+	if ((check_label(bler) == FALSE && check_op(bler) == FALSE) && ft_isalnum(bler->line[bler->sym]))
 		error_printf(bler, ERROR_UNKNOWN_TEXT, bler->line);
 }

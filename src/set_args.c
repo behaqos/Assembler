@@ -161,6 +161,6 @@ void                set_args(t_asm *bler, t_operation *oper, char **args)
 		i++;
 	}
 	check_arg_count_type(bler, oper);
-	set_op_size(oper); // подсчет размера операции FIXME Daler
+	set_op_size(oper);
 	print_operation(bler, oper);
 }

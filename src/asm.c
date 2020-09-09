@@ -187,6 +187,6 @@ int             main(int argc, char **argv)
     check_file(&bler, argv[1]);
     parser(&bler);
 	recorder(&bler);
-	// FIXME DALER: Ака зафришьте все пожалуйста
-    exit(0);
+	clear_bler(&bler);
+	exit(0);
 }

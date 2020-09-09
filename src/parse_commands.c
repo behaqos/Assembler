@@ -44,7 +44,6 @@ t_operation     *init_op_list(t_asm *bler)
     if (!bler->oper)
 	{
     	bler->oper = new_op;
-    	bler->head_oper = new_op;
 	}
     else
         tmp->next = new_op;
@@ -70,7 +69,6 @@ void            parse_lbl_op(t_asm *bler)
     {
         oper = init_op_list(bler);
         add_lbls(bler, oper);
-        //FIXME почему операции, которые только с lable не сохраняются в списке операций?
         add_op(bler, oper);
     }
     if (bler->line != NULL)
@@ -95,6 +93,6 @@ void            parse_instructions(t_asm *bler)
 		bler->sym = 0;
     }
     if (bler->line != NULL)
-	    exit(1);
+	    exit(13);
     // TODO check_last_line(bler) <----------------- Напиши функцию, чтобы вывести ошибку, если после операции и аргументов что-то лишнее в строке.
 }

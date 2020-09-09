@@ -167,7 +167,6 @@ typedef  struct     s_asm
     int 			exec_code_size; // TODO DALER ОБЩИЙ РАЗМЕР КОДА
     int             line_len;
 	t_rec			record;
-	t_operation 	*head_oper;
 }                   t_asm;
 
 /*
@@ -204,5 +203,5 @@ void                check_arg_count_type(t_asm *bler, t_operation *oper);
  * Утилиты
  */
 void                print_operation(t_asm *bler, t_operation *opera);
-
+void                clear_bler(t_asm *bler);
 #endif
