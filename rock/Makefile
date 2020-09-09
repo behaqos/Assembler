@@ -6,7 +6,7 @@
 #    By: opavliuk <opavliuk@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/03/26 16:04:15 by opavliuk          #+#    #+#              #
-#    Updated: 2018/06/08 13:37:57 by opavliuk         ###   ########.fr        #
+#    Updated: 2020/09/09 14:09:57 by dpenney          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,8 +41,8 @@ SRC=./srcs/add_argument.c \
 INCLUDES=includes/
 HEADER=includes/asm.h
 OBJ=$(SRC:.c=.o)
-LIB = ../libft/libft.a
-LIB_HEADER=../libft/libft.h
+LIB = ./libft/libft.a
+LIB_HEADER=./libft/libft.h
 NAME=asm
 
 all: $(NAME)
@@ -56,7 +56,7 @@ $(NAME): $(LIB) $(OBJ) $(HEADER) $(LIB_HEADER)
 	@ printf "\n\n###	$(GREEN) asm $(COLOR_OFF) is $(GREEN)READY!$(COLOR_OFF) 	###\n\n"
 
 $(LIB):
-	@ make -C ../libft/
+	@ make -C ./libft/
 
 clean: 
 	@ rm -f $(OBJ)

@@ -111,6 +111,7 @@ void            add_lbls(t_asm *bler, t_operation *oper)
          * FIXME как обнаружить \n в конце метки, если GNL возвращает все строки с "\n"?
          * 1. Поменять GNL, но тогда будет читать как <метка\n>
          * 2. Вставить костыль, который будет вставлять \n в конце каждой строки;
+         * 3. Разобрать check_last_line ROCK!
         */
         bler->line ? ft_strdel(&bler->line) : 0; // применил вместо ft_strdel
         if (get_next_line(bler->fd, &bler->line) > 0 && bler->line)

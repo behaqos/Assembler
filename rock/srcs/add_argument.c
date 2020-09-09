@@ -35,11 +35,6 @@ t_arg				*push_new_arg(t_arg **args)
 	return (new);
 }
 
-/*
- * Здесь записываем всё исходя из  констант;
- * Однако если это DIR, то
- */
-
 static	char		get_arg_size(char opcode, char type)
 {
 	if (type == T_REG)
@@ -48,7 +43,6 @@ static	char		get_arg_size(char opcode, char type)
 		return (T_IND_SIZE);
 	else
 	{
-	    //TODO Разберись что здесь происходит.
 		if (LABEL_SIZE(opcode) == 4)
 			return (4);
 		else
@@ -61,32 +55,19 @@ static	char		get_arg_size(char opcode, char type)
 ** 'return ((void*)my_strsub(str + 1, 0, ft_strlen(str) - 1))'
 */
 
-/*
- * В этой функции получаем значения аргументов.
- * Если это тип T_REG, то флагу присваиваем код этого типа.
- * Далее выделяем память под положительное целое число, куда присваиваем значение.
- * Возвращаем числовое значение.
- * Установлено void значение, т.к. может быть как строка, так и цифры.
- */
-
 void				*get_data(char type, char *str, char *flag)
 {
 	unsigned int	*num_val;
 
 	if (type == T_REG)
 	{
-		*flag = UINT_VAL; // указываем, что это цифры.
+		*flag = UINT_VAL;
 		num_val = (unsigned int *)malloc(sizeof(unsigned int));
 		*num_val = ft_atoi(str + 1);
 		return ((void*)num_val);
 	}
 	else
 	{
-	/*
-	 * Если же там символ %, то идём дальше.
-	 * Если дальше двоеточие, тогда обрезаем эту часть аргумента и воз-ем.
-	 * А флагу указываем, что это строка, чтобы правильно получать.
-	 */
 		(*str == '%') ? str++ : 0;
 		if (*str == ':')
 		{
@@ -95,9 +76,6 @@ void				*get_data(char type, char *str, char *flag)
 		}
 		else
 		{
-		    /*
-		     * Иначе записываем как цифру, при этом указывая флаг, что там цифра.
-		     */
 			*flag = UINT_VAL;
 			num_val = (unsigned int *)malloc(sizeof(unsigned int));
 			*num_val = ft_atoi(str);
@@ -113,27 +91,8 @@ void				*get_data(char type, char *str, char *flag)
 ** 'new->flag = 1'
 */
 
-/*
- * Здесь присваиваем значения в операцию.
- * type - хранит тип аргумента
- * data - значение аргумента;
- * flag - указывает что мы будем парсить.
- * В зависимости от флага - парсим
- *
- * Структура данных t_arg хранит в себе все данные
- * аргументов в зависимости от их характеристик.
- * Сначала выделяется память для аргументов в структуре данных операций.
- * Дальше уже начинаем присваиваение. Если это строка, то записываем строку
- * Указываем флагом единицу.
- * Если это цифра, то указываем записываем  цифру
- * и очищаем цифру.
- * В тип записываем тип.
- * Размер аргумента находим в функци get_arg_size и записываем тоже в структуру.
- * (opcode);
- */
-
 void				add_argument(t_command *command, char type,
-					void *data, char flag)
+                                 void *data, char flag)
 {
 	t_arg			*new;
 
@@ -141,12 +100,11 @@ void				add_argument(t_command *command, char type,
 	if (flag == STRING_VAL)
 	{
 		new->str_value = (char *)data;
-		new->flag = STRING_VAL;
+		new->flag = 1;
 	}
 	else if (flag == UINT_VAL)
 	{
-		new->num_value = ((int *)data)[0]; //TODO почему ячейку передает?
-		new->flag = UINT_VAL;
+		new->num_value = ((int *)data)[0];
 		free(data);
 	}
 	new->type = type;
