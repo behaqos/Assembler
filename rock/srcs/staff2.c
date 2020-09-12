@@ -22,19 +22,26 @@
 
 char		check_last_line(t_asm *asmb)
 {
+	//Создаёт массив с размером последней строки
 	char	s[asmb->last_line_size + 1];
 	int		i;
 
 	i = 0;
+	//обнуляет массив строк.
 	ft_bzero(s, asmb->last_line_size + 1); // Обнуляет всю строку без очистки.
-	lseek(asmb->fd, -asmb->last_line_size, SEEK_CUR); // TODO Что здесь происходит?
-	read(asmb->fd, &s, asmb->last_line_size); // Читает fd-шник в s на прежний размер байтов
-	if (!str_has(s, LABEL) && !str_has(s, COMMAND)) // Если есть метка или операция, то возв-ет единицу.
+// lseek передвигает указатель fd на кол-во байтов назад от настоящего
+// TODO Что здесь происходит?
+	lseek(asmb->fd, -asmb->last_line_size, SEEK_CUR);
+	// Читает fd-шник в s на прежний размер байтов
+	read(asmb->fd, &s, asmb->last_line_size);
+	// Если нет метки или операции, то вывод ошибки.
+	if (!str_has(s, LABEL) && !str_has(s, COMMAND))
 		return (1);
 	else
 	{
 		i = ft_strlen(s) - 1; //Проверяет есть ли там перенос строки. Если нет, то возвращает ошибку.
 		if (s[i] == '\n')
+			// Если последний символ это символ следующей строки, то вывод ошибки.
 			return (1);
 	}
 	return (0);
