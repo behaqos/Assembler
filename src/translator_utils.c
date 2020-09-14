@@ -38,4 +38,3 @@ void 	rec_init(t_asm *bler)
     if ((bler->record.final_code = ft_strnew(bler->record.file_size)) == NULL)
         error_printf(bler, "ERROR MALLOC\n", NULL); // FIXME HELP AKI BEKHRUZ
 }
-

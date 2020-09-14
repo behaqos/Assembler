@@ -74,7 +74,7 @@ int                     write_name(t_asm *bler, int *c ,int *code, int i)
 	return (*c);
 }
 
-//FIXME Почему флаг 4? Замени константой
+//FIXME Почему флаг 4?
 /*
  * В данной фукции мы парсим имя и комментарий чемпиона.
  * С помощью хитрой флаговой системы мы получаем данные
@@ -101,6 +101,7 @@ void            parse_name_comm(t_asm *bler)
 			len = write_name(bler, &len, &flag, 8);
 		else
 			len = write_name(bler, &len, &flag, 0);
+		free(bler->line);
 	}
 	if (flag != 4)
 		error_printf(bler, ERROR_NOT_FOUND_NM_CM, NULL);

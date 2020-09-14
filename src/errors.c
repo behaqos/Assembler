@@ -20,6 +20,7 @@ void                clear_operations(t_operation *opers)
 	while (tmp)
 	{
 		tmp->name ? free(tmp->name) : 0;
+		tmp->lbl && tmp->lbl->str ? free(tmp->lbl->str) : 0;
 		tmp->lbl ? free(tmp->lbl) : 0;
 		clean_arguments(tmp->args);
 		tmp = tmp->next;

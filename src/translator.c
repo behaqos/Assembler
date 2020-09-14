@@ -151,6 +151,6 @@ void	recorder(t_asm *bler)
     ft_putstr(bler->files_name);
     ft_putstr(".cor file\n");
     opcode_to_bytecode(bler);
-   //FIXME это нужно или убрать? //write(bler->record.file_fd, rec->final_code, rec->file_size);
+    // FIXME write(bler->record.file_fd, rec->final_code, rec->file_size);
     write(open("111111.cor", O_WRONLY | O_TRUNC | O_CREAT, 0644), rec->final_code, rec->file_size);
 }

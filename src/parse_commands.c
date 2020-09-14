@@ -102,6 +102,24 @@ void            parse_lbl_op(t_asm *bler)
     }
 }
 
+void            check_end_line(t_asm *bler)
+{
+	int         lpos;
+	char        sym;
+	int         fd_res;
+
+	fd_res = -42;
+	lpos = 0;
+	lpos = lseek(bler->fd, -1, SEEK_END);
+	printf("Текущая позиция=%ld\n", lpos);
+	fd_res = read(bler->fd, &sym, 1);
+	if (sym == '\n')
+		printf("OK\n");
+	printf("Символ: %c\nFD_RES = %d", sym, fd_res);
+	//FIXME опиши функцию до конца и вызови ошибку - ошибка конца строки.
+	//ERROR_END_LINE
+}
+
 void            parse_instructions(t_asm *bler)
 {
     while (get_next_line(bler->fd, &bler->line) > FALSE)
@@ -111,5 +129,6 @@ void            parse_instructions(t_asm *bler)
 		parse_lbl_op(bler);
 		bler->sym = 0;
     }
-   // TODO end_line_validation(bler); <----------------- Напиши функцию, чтобы вывести ошибку, если после операции и аргументов что-то лишнее в строке.
+	check_end_line(bler);
 }
+//FIXME когда много запятых после аргументов, он их пропускает, а не выводит ошибку.

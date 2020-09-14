@@ -6,7 +6,7 @@
  * то выводим ошибку. Создается два цикла для поиска.
  * Один цикл для проверки, другой для прохода.
  */
-
+// FIXME вылетает при исполнении этой функции
 int             check_lbl_dupl(t_asm *bler)
 {
 	t_operation *tmp_oper;
@@ -37,7 +37,6 @@ void        parser(t_asm *bler)
 	ft_printf("COMMENT:    %s\n", bler->comment);
 	parse_instructions(bler);
 	check_lbl_dupl(bler);
-	//TODO plavleno, убрать две строки ниже в другую функцию.
 	if (!bler->oper)
 		error_printf(bler, ERROR_CONTANT, NULL);
 }
