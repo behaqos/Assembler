@@ -1,5 +1,10 @@
 #include "asm.h"
 
+/*
+ * Функция которая вычисляет размер бущуего чемпиона,
+ * а так же задает адрес меткам и операциям.
+ */
+
 void	get_exec_code_size(t_asm *bler)
 {
     int len;
@@ -17,6 +22,10 @@ void	get_exec_code_size(t_asm *bler)
         error_printf(bler, ERROR_CHMP_SIZE, NULL);
     bler->exec_code_size = len;
 }
+
+/*
+ * Инициализация переменных для дальнейшей работы с записью в файл.
+ */
 
 void 	rec_init(t_asm *bler)
 {

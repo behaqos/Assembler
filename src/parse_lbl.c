@@ -37,10 +37,8 @@ int             check_label(t_asm *bler)
 
 void            add_lbl_list(t_asm *bler, t_operation *oper, char *str)
 {
-    t_lbls      *tmp;
     t_lbls      *new_lbl;
 
-    tmp = oper->lbl;
     if (!(new_lbl = (t_lbls *)ft_memalloc(sizeof(t_lbls))))
         return ;
 	new_lbl->str = ft_strdup(str);

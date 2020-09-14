@@ -1,5 +1,14 @@
 #include "asm.h"
 
+/*
+ * Главный переводчик в байт-код устроен таким образом:
+ * на вход получаем струткуру в которой все хранится,
+ * данные которые нужно переписать, и кол-во байтов
+ * которые требуется переписать. С помощью битовых операций
+ * мы проходимся по данным и с помощью маски 0xFF вытаскиваем
+ * два последних октета.
+ */
+
 void		bytecode_conversion(t_rec *rec,int data ,int size)
 {
     int	i;
@@ -12,6 +21,12 @@ void		bytecode_conversion(t_rec *rec,int data ,int size)
         i++;
     }
 }
+
+/* Бывают операции которые имеют код типов аргументов,
+ * этот код так же нужно генерировать.
+ * Мы просто проходимся по регистрам операции и выполняем
+ * битовые операции.
+ */
 
 char			create_code_type_arg(t_operation *oper)
 {
@@ -40,6 +55,12 @@ char			create_code_type_arg(t_operation *oper)
     return (res);
 }
 
+/* Как мы знаем T_DIR может хранить в себе либо число, либо метку.
+ * Данная функция помогат нам понять какое значение нам записать
+ * вместо метки, а записать нужно относительный адрес от операции до
+ * нужной метки. Если это просто число, то нужно просто его вписать.
+ */
+
 int		get_t_dir_val(t_argument *arg, t_asm *bler, t_operation *oper)
 {
     // Нужно обрезать число
@@ -66,34 +87,51 @@ int		get_t_dir_val(t_argument *arg, t_asm *bler, t_operation *oper)
     return (res);
 }
 
-void 	test(t_asm *bler)
-{
-    t_operation *oper;
-    t_rec *rec;
-    t_argument *args;
+/*
+ * В данной функции мы переводим транслируем
+ * операции(точнее их регистры) в байт-код.
+ */
 
-    rec = &bler->record;
-    oper = bler->oper;
-    while (oper)
-    {
-        args = oper->args;
-        if (oper->name != NULL)
-        {
-            bytecode_conversion(rec, oper->op_code, 1);
-            if (oper->code_type_arg)
-                bytecode_conversion(rec, create_code_type_arg(oper), oper->code_type_arg);
-            while(args)
-            {
-                if (args->type == T_REG || args->type == T_IND)
-                    bytecode_conversion(rec, (int)args->num_val, args->args_size);
-                else if (args->type == T_DIR)
-                    bytecode_conversion(rec, get_t_dir_val(args, bler, oper), args->args_size);
-                args = args->next;
-            }
-        }
-        oper = oper->next;
-    }
+void 	opcode_to_bytecode(t_asm *bler)
+{
+	t_operation *oper;
+	t_rec *rec;
+	t_argument *args;
+
+	rec = &bler->record;
+	oper = bler->oper;
+	while (oper)
+	{
+		args = oper->args;
+		if (oper->name != NULL)
+		{
+			bytecode_conversion(rec, oper->op_code, 1);
+			if (oper->code_type_arg)
+				bytecode_conversion(rec, create_code_type_arg(oper), oper->code_type_arg);
+			while(args)
+			{
+				if (args->type == T_REG || args->type == T_IND)
+					bytecode_conversion(rec, (int)args->num_val, args->args_size);
+				else if (args->type == T_DIR)
+					bytecode_conversion(rec, get_t_dir_val(args, bler, oper), args->args_size);
+				args = args->next;
+			}
+		}
+		oper = oper->next;
+	}
 }
+
+/*
+ * В данной функции начинается весь процесс записи данных в .cor файл
+ * Для начала проходимся и подсчитываем размер исполняемго когда.
+ * Далее инициализируем переменные, чтоб их использовать в процессе записи.
+ * В первом вызове bytecode_conversion записываем Magic Header.
+ * Далее переписывем имя и сдвигаем курсор на нужное кол-во байтов.
+ * Вставляем размер файла, который мы вычисляли ранее.
+ * Переписываем комментарий и так же сдвигаем курсор.
+ * После, начинаем транслировать операции записывая их в структуру.
+ * И в последний момент вставляем содержимое структуры в файл.
+ */
 
 void	recorder(t_asm *bler)
 {
@@ -112,7 +150,7 @@ void	recorder(t_asm *bler)
     ft_putstr("Writing output program to ");
     ft_putstr(bler->files_name);
     ft_putstr(".cor file\n");
-    test(bler);
+    opcode_to_bytecode(bler);
    //FIXME это нужно или убрать? //write(bler->record.file_fd, rec->final_code, rec->file_size);
     write(open("111111.cor", O_WRONLY | O_TRUNC | O_CREAT, 0644), rec->final_code, rec->file_size);
 }
