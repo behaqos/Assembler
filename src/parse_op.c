@@ -28,13 +28,14 @@ int             find_oper(char *str, int len)
     i = 0;
     while (i < 16)
     {
-        if (ft_strnequ(g_op_tab[i].name, str, len))
+        if (ft_strnequ(g_op_tab[i].name, str, len) &&
+                ft_strlen(g_op_tab[i].name) == len)
             return (g_op_tab[i].op_code);
         i++;
     }
     return (-1);
 }
-
+//FIXME на некоторые операции с неправильными названиями парсинг идёт нормально.Это надо исправить.
 /*
  * Сначала проверяется есть ли метка. Если метка есть, то до двоеточия всё пропускается
  * Далее проверяем являются ли следующие символы буквами, что говорит нам об операциях.
@@ -90,10 +91,9 @@ void             parse_op(t_asm *bler, t_operation *oper)
 	if (GNLINE != ' ' && GNLINE != '\t' &&
 		GNLINE != '%' && GNLINE != '-')
 		error_printf(bler, ERROR_LINE, bler->line);
-	//FIXME здесь записывается под первую метку, а должен записывать в последнюю метку, после которой идёт операция.
 	oper->name = ft_assm_strsub(bler->line, start, bler->sym - start);
 	oper->op_code = find_oper(oper->name, ft_strlen(oper->name));
-	oper->code_type_arg = g_op_tab[oper->op_code - 1].cod_t_args; // FIXME DALER Можно и убрать если в другом месте не используется
+	oper->code_type_arg = g_op_tab[oper->op_code - 1].cod_t_args;
 }
 
 /*

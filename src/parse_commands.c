@@ -50,12 +50,26 @@ t_operation     *init_op_list(t_asm *bler)
     return (new_op);
 }
 
-void            check_end(t_asm *bler)
+void            end_line_validation(t_asm *bler)
 {
-	bler->line ? ft_strdel(&bler->line) : 0;
+	int 		i;
+	char 		*str;
+
+	i = 0;
+	if (bler->line != NULL)
+		free(bler->line);
+	bler->line = ft_strnew(bler->line_len);
 	lseek(bler->fd, -bler->line_len, SEEK_CUR);
 	read(bler->fd, &bler->line, bler->line_len);
-	//ft_printf("LSEEK: %s\n", bler->line);
+	bler->sym = 0;
+	if (!check_op(bler) && !check_label(bler))
+		error_printf(bler, "TEST", NULL);
+	else
+	{
+		i = ft_strlen(bler->line) - 1;
+		if (bler->line[i] == '\n')
+			error_printf(bler, "TEST2", NULL);
+	}
 }
 
 /*
@@ -86,22 +100,16 @@ void            parse_lbl_op(t_asm *bler)
     	if (*str != '\0')
 		    error_printf(bler, ERROR_CONTANT, bler->line);
     }
-	//check_end(bler);
 }
-
-//FIXME если мусор после имени с комментом и перед меткой, то пропускает. Исправь.
-// TODO что делать, если названия двух меток одинаковы?
 
 void            parse_instructions(t_asm *bler)
 {
-    while (get_next_line(bler->fd, &bler->line) > 0)
+    while (get_next_line(bler->fd, &bler->line) > FALSE)
     {
         bler->line_len = ft_strlen(bler->line);
         pass_comments(bler->line);
 		parse_lbl_op(bler);
 		bler->sym = 0;
     }
-    if (bler->line != NULL)
-	    exit(13);
-    // TODO check_last_line(bler) <----------------- Напиши функцию, чтобы вывести ошибку, если после операции и аргументов что-то лишнее в строке.
+   // TODO end_line_validation(bler); <----------------- Напиши функцию, чтобы вывести ошибку, если после операции и аргументов что-то лишнее в строке.
 }

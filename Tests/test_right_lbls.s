@@ -4,6 +4,8 @@
 a:
 b:
 c:
-d:
+aaweaw:
+aaweaw:
+
     fork %:a
 check:

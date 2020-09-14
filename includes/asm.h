@@ -9,6 +9,7 @@
 
 # define TRUE 1
 # define FALSE 0
+
 # define ERROR_LINE "ERROR: This line have not valid parameters.\n"
 # define ERROR_ARGS "ERROR: This line have not valid arguments.\n"
 # define ERROR_ALLOCATE "ERROR: Didn't allocate memory.\n"
@@ -26,11 +27,12 @@
 # define ERROR_NOT_FOUND_NM_CM "ERROR: Name or comment not fount.\n"
 # define ERROR_UNKNOWN_TEXT "ERROR: This line is unknown to program:\n"
 # define ERROR_END_LINE "ERROR: wrong end of file. Please check content of file.\n"
-
+# define ERROR_CHMP_SIZE "ERROR: The champs size is exceeded.\n"
+# define ERROR_LBLS_NOT "ERROR: Champ file have lable which not exist.\n"
+# define ERROR_DOUBLE_LBL "ERROR: file have double lable name.\nPlease, fix files labels.\n"
 # define MAX_UINT 4294967295
 # define NEARLY_MAX_UINT 429496729
 # define SIZE_T_IND 2
-# define SIZE_T_DIR 2
 # define SIZE_T_REG 1
 
 /*
@@ -190,6 +192,19 @@ void                *parse_data(char *arg, int arg_type, int *detector);
 void                join_argument(t_operation *oper, void *arg, int type, int detector);
 void                check_commas(t_asm *bler, t_operation *oper, char **args);
 void                check_arg_count_type(t_asm *bler, t_operation *oper);
+
+/*
+ * Functions of translator
+ */
+
+void		recorder(t_asm *bler);
+void		get_exec_code_size(t_asm *bler);
+void 		rec_init(t_asm *bler);
+void 		test(t_asm *bler);
+int			get_t_dir_val(t_argument *arg, t_asm *bler, t_operation *oper);
+char		create_code_type_arg(t_operation *oper);
+void		bytecode_conversion(t_rec *rec,int data ,int size);
+
 /*
  * Утилиты
  */

@@ -74,8 +74,6 @@ int                     write_name(t_asm *bler, int *c ,int *code, int i)
 	return (*c);
 }
 
-//FIXME Почему флаг 4? Замени константой
-
 void            parse_name_comm(t_asm *bler)
 {
 	int flag;
@@ -84,7 +82,7 @@ void            parse_name_comm(t_asm *bler)
 	flag = 0;
 	bler->name = ft_strnew(PROG_NAME_LENGTH);
 	bler->comment = ft_strnew(COMMENT_LENGTH);
-	while (get_next_line(bler->fd, &bler->line) > 0 && flag < 4)
+	while (flag < 4 && get_next_line(bler->fd, &bler->line) > 0)
 	{
 		if (flag == 0 || flag == 2)
 			len = 0;

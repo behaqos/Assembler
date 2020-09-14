@@ -31,9 +31,7 @@ void                clear_bler(t_asm *bler)
 	bler->files_name ? free(bler->files_name) : 0;
 	bler->name ? free(bler->name) : 0;
 	bler->comment ? free(bler->comment) : 0;
-	if (bler->line[0])
-		free(bler->line);
-	clear_operations(bler->oper);
+    clear_operations(bler->oper);
 }
 
 void                error_printf(t_asm *bler, char *text, char *line)
