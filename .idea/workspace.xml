@@ -31,24 +31,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fb3db04e-cb60-4e7e-b99f-7d1f83732990" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tests/111111.cor" beforeDir="false" afterPath="$PROJECT_DIR$/Tests/111111.cor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tests/42.cor" beforeDir="false" afterPath="$PROJECT_DIR$/Tests/42.cor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tests/test_right_lbls.s" beforeDir="false" afterPath="$PROJECT_DIR$/Tests/test_right_lbls.s" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/includes/asm.h" beforeDir="false" afterPath="$PROJECT_DIR$/includes/asm.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rock/srcs/get_commands.c" beforeDir="false" afterPath="$PROJECT_DIR$/rock/srcs/get_commands.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/asm.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/asm.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/errors.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/errors.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/join_args_to_oper.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/join_args_to_oper.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/parse_args.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/parse_args.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/parse_commands.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/parse_instruments.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/parse_data.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/parse_data.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/parse_lbl.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/parse_lbl.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/parse_op.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/parse_op.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/parser.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/parser.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/set_args.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/set_args.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/translator.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/translator.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -223,7 +206,7 @@
       <workItem from="1599747793568" duration="8772000" />
       <workItem from="1599899638437" duration="6153000" />
       <workItem from="1600118112766" duration="5906000" />
-      <workItem from="1600131169451" duration="5869000" />
+      <workItem from="1600131169451" duration="6277000" />
     </task>
     <servers />
   </component>
