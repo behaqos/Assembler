@@ -21,7 +21,9 @@ CYAN	=\033[0;36m#		# Cyan
 WHITE	=\033[0;37m#		# White
 
 CC=gcc 
-CFLAGS=-Wall -Werror -Wextra
+ifeq ($(shell uname -s),Darwin)
+	CFLAGS=-Wall -Werror -Wextra
+endif
 SRC=./ft_memset.c \
 	./ft_atoi.c \
 	./ft_bzero.c \
