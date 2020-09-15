@@ -6,7 +6,7 @@
 /*   By: dpenney <dpenney@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/15 06:22:18 by dpenney           #+#    #+#             */
-/*   Updated: 2020/09/15 06:45:01 by dpenney          ###   ########.fr       */
+/*   Updated: 2020/09/15 06:55:50 by dpenney          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ void                print_operation(t_asm *bler, t_operation *opera)
 		ft_printf("\n");
 	}
 	ft_printf("\n--------------------------------------\n");
-
 
 }
 

@@ -76,7 +76,7 @@ static	void		get_command(t_asm *asmb, t_command *new, int *j)
 
 /*
 ** LCA means Label + Command + Arguments
- * 	/* Сначала проверяет есть ли метка ИЛИ команда в линии.
+ *  Сначала проверяет есть ли метка ИЛИ команда в линии.
 	  Если один из них нашёлся, то
 	  push_new_command - выделяет память под операцию.
 	  get_labels - парсит в переменную new.

@@ -92,7 +92,7 @@ int                     write_name(t_asm *bler, int *c ,int *code, int i)
  * С помощью хитрой флаговой системы мы получаем данные
  * и валидируем их.
  */
-
+//FIXME Если комментарий перед именем и комментом, то выводится ошибка! Игрок Car из vm_champs/champs
 void            parse_name_comm(t_asm *bler)
 {
 	int flag;
@@ -115,8 +115,7 @@ void            parse_name_comm(t_asm *bler)
 			len = write_name(bler, &len, &flag, 0);
 		free(bler->line);
 	}
-	if (flag != 4)
-		error_printf(bler, ERROR_NOT_FOUND_NM_CM, NULL);
+	flag != 4 ? error_printf(bler, ERROR_NOT_FOUND_NM_CM, NULL) : 0;
 	pass_voids(bler);
 	if ((check_label(bler) == FALSE && check_op(bler) == FALSE) && ft_isalnum(bler->line[bler->sym]))
 		error_printf(bler, ERROR_UNKNOWN_TEXT, bler->line);

@@ -33,6 +33,13 @@ void            check_extension(const char *str)
 }
 
 //TODO провести по двум чекерам в FAQ 21
+//FIXME есть различие в бинарных файлах с игроком Death.s из vm_champs/champs.
+//FIXME когда в конце много новых линий, то наш выводит ошибку, а оригинал читает и переводит. (mortel.s)
+//FIXME имя игрока barriere.s парсит с ошибкой, хотя там все норм. оригинал работает.
+//FIXME jumper.s у него метка стоит вместо T_IND данных, а у меня выводит ошибку. Разберись в search_type функции.
+//FIXME игрок mat.s использует r0, а оригинальный читает нормально. В T_REG от 0 до 16 или от 1 до 16?
+//FIXME с игроком maxidef неправильно определяет тип для метки. Оригинал читает нормально.\
+//FIXME Binary files 111111.cor and ./vm_champs/champs/slider2.cor differ
 
 int             main(int argc, char **argv)
 {
