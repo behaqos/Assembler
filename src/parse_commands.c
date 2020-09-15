@@ -27,7 +27,8 @@ void            pass_comments(char *str)
 
 void            pass_voids(t_asm *bler)
 {
-    while (bler->line[bler->sym] && (bler->line[bler->sym] == ' ' || bler->line[bler->sym] == '\t'))
+    while (bler->line[bler->sym] && (bler->line[bler->sym] == ' '
+                || bler->line[bler->sym] == '\t'))
         bler->sym++;
 }
 
@@ -111,13 +112,15 @@ void            check_end_line(t_asm *bler)
 	fd_res = -42;
 	lpos = 0;
 	lpos = lseek(bler->fd, -1, SEEK_END);
-	printf("Текущая позиция=%ld\n", lpos);
 	fd_res = read(bler->fd, &sym, 1);
-	if (sym == '\n')
-		printf("OK\n");
-	printf("Символ: %c\nFD_RES = %d", sym, fd_res);
-	//FIXME опиши функцию до конца и вызови ошибку - ошибка конца строки.
-	//ERROR_END_LINE
+	if (sym == '\n' && bler->line == NULL)
+		return ;
+	else
+		error_printf(bler, ERROR_END_LINE, NULL);
+//
+//	printf("Символ: %c\nFD_RES = %d", sym, fd_res);
+//	//FIXME опиши функцию до конца и вызови ошибку - ошибка конца строки.
+//	//ERROR_END_LINE
 }
 
 void            parse_instructions(t_asm *bler)
