@@ -69,6 +69,7 @@ void                join_argument(t_operation *oper, void *arg, int type, int de
 {
 	t_argument     *new_arg;
 
+	new_arg = NULL;
 	new_arg = init_new_arg_list(new_arg, oper, type, detector);
 	if (detector == STRING_VAL)
 	{

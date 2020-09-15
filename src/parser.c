@@ -11,7 +11,6 @@ int             check_lbl_dupl(t_asm *bler)
 {
 	t_operation *tmp_oper;
 	t_operation *tmp2_oper;
-	t_lbls		*lbl_tmp;
 
 	tmp_oper = bler->oper;
 	tmp2_oper = bler->oper->next;

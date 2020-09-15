@@ -29,7 +29,9 @@ void                clear_operations(t_operation *opers)
 
 void                clear_bler(t_asm *bler)
 {
-	bler->files_name ? free(bler->files_name) : 0;
+	if (bler->files_name != NULL)
+		free(bler->files_name);
+	//bler->files_name != NULL ? free(bler->files_name) : 0;
 	bler->name ? free(bler->name) : 0;
 	bler->comment ? free(bler->comment) : 0;
     clear_operations(bler->oper);
@@ -39,6 +41,7 @@ void                error_printf(t_asm *bler, char *text, char *line)
 {
     text ? ft_printf("%s\n", text) : 0;
     line ? ft_printf("%s\n", line) : 0;
-	clear_bler(bler);
+	if (bler)
+		clear_bler(bler);
     exit(0);
 }

@@ -26,7 +26,7 @@
 # define ERROR_COMM_LEN "ERROR: Comment's length is long.\n"
 # define ERROR_NOT_FOUND_NM_CM "ERROR: Name or comment not fount.\n"
 # define ERROR_UNKNOWN_TEXT "ERROR: This line is unknown to program:\n"
-# define ERROR_END_LINE "ERROR: wrong end of file. Please check content of file.\n"
+# define ERROR_END_LINE "ERROR: wrong end of file.\nPlease check content of file.\n"
 # define ERROR_CHMP_SIZE "ERROR: The champs size is exceeded.\n"
 # define ERROR_LBLS_NOT "ERROR: Champ file have lable which not exist.\n"
 # define ERROR_DOUBLE_LBL "ERROR: file have double lable name.\nPlease, fix files labels.\n"
@@ -60,7 +60,7 @@ typedef struct      s_op_list
 	char            *name;
 	char            op_code;
 	char            lbl_size;
-	unsigned        args_num;
+	int             args_num;
 	t_array         args[3];
 	int        	    cod_t_args; //что это? это <<Код типов аргументов>>
 }                   t_op_list;
@@ -190,7 +190,7 @@ void                error_printf(t_asm *bler, char *text, char *line);
 void                set_args(t_asm *bler, t_operation *oper, char **args);
 void                *parse_data(char *arg, int arg_type, int *detector);
 void                join_argument(t_operation *oper, void *arg, int type, int detector);
-void                check_commas(t_asm *bler, t_operation *oper, char **args);
+void                check_commas(t_asm *bler, char **args);
 void                check_arg_count_type(t_asm *bler, t_operation *oper);
 
 /*

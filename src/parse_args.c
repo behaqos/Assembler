@@ -36,7 +36,7 @@ char           		*clean_voids(char *str)
  * Далее ищем запятую между первым и вторым аргументами. Если запятой больше, чем одна, то ошибка.
  */
 
-void                check_commas(t_asm *bler, t_operation *oper, char **args)
+void                check_commas(t_asm *bler, char **args)
 {
 	int             i;
 	int             j;

@@ -7,14 +7,14 @@
 
 void            check_file(t_asm *bler, char *str)
 {
-    bler->files_name = ft_strsub(str,0,ft_strlen(str) - 2);
-    if (!bler->files_name)
-        error_printf(bler, "Error: Can't to read name of the file\n", NULL);
-    bler->fd = open(str, O_RDONLY);
-    if (bler->fd < 0)
-        error_printf(bler, "Error: Can't to open this file\n", NULL);
-    if (read(bler->fd, 0, 0) == -1)
-        error_printf(bler, "Error: Can't to read this file\n", NULL);
+	bler->files_name = ft_strsub(str, 0, ft_strlen(str) - 2);
+	if (!bler->files_name)
+		error_printf(bler, "Error: Can't to read name of the file\n", NULL);
+	bler->fd = open(str, O_RDONLY);
+	if (bler->fd < 0)
+		error_printf(bler, "Error: Can't to open this file\n", NULL);
+	if (read(bler->fd, 0, 0) == -1)
+		error_printf(bler, "Error: Can't to read this file\n", NULL);
 }
 
 void            check_extension(const char *str)
@@ -24,12 +24,7 @@ void            check_extension(const char *str)
 	error_printf(NULL, ERROR_FILE_EXTENSION, NULL);
 }
 
-// __________________________________________
-
-
-
-
-
+//TODO провести по двум чекерам в FAQ 21
 
 int             main(int argc, char **argv)
 {

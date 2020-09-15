@@ -44,11 +44,11 @@ char                *parse_data_num(char *arg, int *detector, int i)
 
 void                *parse_data(char *arg, int arg_type, int *detector)
 {
-	unsigned        *value_num;
 	int             i;
 	char            *str;
 
 	i = 0;
+	str = NULL;
 	if (arg_type == T_REG)
 		return (parse_t_reg(arg, &*detector));
 	else

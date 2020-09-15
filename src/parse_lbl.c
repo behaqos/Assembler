@@ -35,7 +35,7 @@ int             check_label(t_asm *bler)
  * new label. If don't exist - keeping pointer like first label.
  */
 
-void            add_lbl_list(t_asm *bler, t_operation *oper, char *str)
+void            add_lbl_list(t_operation *oper, char *str)
 {
     t_lbls      *new_lbl;
 
@@ -64,7 +64,7 @@ void            add_new_lbl(t_asm *bler, int *lbl_end, t_operation *oper)
         (*lbl_end)++;
     res = ft_strsub(bler->line, start, *lbl_end);
 	(*lbl_end)++;
-    add_lbl_list(bler, oper, res);
+    add_lbl_list(oper, res);
     free(res);
 }
 

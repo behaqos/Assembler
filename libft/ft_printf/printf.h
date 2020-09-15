@@ -13,7 +13,7 @@
 #ifndef PRINTF_H
 # define PRINTF_H
 
-# include "libft.h"
+# include "../includes/libft.h"
 # include <stdarg.h>
 
 # define A {{"di", &w_itoa_b10, &int_extractor, 1},

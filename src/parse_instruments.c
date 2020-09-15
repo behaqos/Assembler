@@ -54,7 +54,6 @@ t_operation     *init_op_list(t_asm *bler)
 void            end_line_validation(t_asm *bler)
 {
 	int 		i;
-	char 		*str;
 
 	i = 0;
 	if (bler->line != NULL)
@@ -67,7 +66,7 @@ void            end_line_validation(t_asm *bler)
 		error_printf(bler, "TEST", NULL);
 	else
 	{
-		i = ft_strlen(bler->line) - 1;
+		i = (int)ft_strlen(bler->line) - 1;
 		if (bler->line[i] == '\n')
 			error_printf(bler, "TEST2", NULL);
 	}
@@ -88,7 +87,8 @@ void            parse_lbl_op(t_asm *bler)
     t_operation *oper;
     char        *str;
 
-    if (check_label(bler) || check_op(bler))
+    if (check_label(bler) ||
+            check_op(bler))
     {
         oper = init_op_list(bler);
         add_lbls(bler, oper);
@@ -96,6 +96,7 @@ void            parse_lbl_op(t_asm *bler)
     }
     if (bler->line != NULL)
     {
+    	//FIXME вот здесь нужно проверять на присутствие лишних символов.
     	pass_voids(bler);
 	    str = bler->line + bler->sym;
     	if (*str != '\0')
@@ -117,10 +118,6 @@ void            check_end_line(t_asm *bler)
 		return ;
 	else
 		error_printf(bler, ERROR_END_LINE, NULL);
-//
-//	printf("Символ: %c\nFD_RES = %d", sym, fd_res);
-//	//FIXME опиши функцию до конца и вызови ошибку - ошибка конца строки.
-//	//ERROR_END_LINE
 }
 
 void            parse_instructions(t_asm *bler)

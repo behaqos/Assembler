@@ -138,6 +138,7 @@ void	recorder(t_asm *bler)
     t_rec *rec;
     int fd;
 
+    fd = 0;
     get_exec_code_size(bler);
     rec_init(bler);
     rec = &bler->record;

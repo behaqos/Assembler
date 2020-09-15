@@ -150,7 +150,7 @@ void                set_args(t_asm *bler, t_operation *oper, char **args)
 
 
 	i = 0;
-	check_commas(bler, oper, args);
+	check_commas(bler, args);
 	while (args[i] != NULL)
 	{
 		detector = 0;
