@@ -29,12 +29,12 @@ OBJ = $(SRC:.c=.o)
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
+%.o: %.c
+		gcc -Wall -Wextra -Werror -o $@ -c $< -I includes -I ft_printf -I ftoa
+
+$(NAME): $(OBJ) ./includes/libft.h
 	ar rc $(NAME) $(OBJ)
 	ranlib $(NAME)
-
-%.o: %.c
-		gcc -Wall -Wextra -Werror -c $< -o $@ -I includes -I ft_printf -I ftoa 
 
 clean:
 	rm -f $(OBJ)

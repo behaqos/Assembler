@@ -43,5 +43,5 @@ fclean: clean
 	make fclean -C ./libft/
 
 re: fclean all
-#TODO проверить на перекомпиляцию всех файлов при изменении хейдера и перекомпиляции одного файла, если изменили один .c файл.
+
 .PHONY: all, clean, fclean, re
